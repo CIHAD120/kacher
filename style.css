@@ -1,1461 +1,1431 @@
 /* ==========================================================================
-       GLOBAL DESIGN SYSTEM (Premium Dark Mode)
-       Strict adherence to requested CSS Custom Properties & Interaction tokens
-       ========================================================================== */
-    :root {
-      --bg-main: #0F172A;
-      --bg-card: #1E293B;
-      --accent-gold: #D4AF37;
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --danger: #EF4444;
-      --success: #10B981;
-
-      /* Derived surface & border tokens for depth and crisp contrast */
-      --bg-elevated: #26354D;
-      --bg-input: #0B1120;
-      --border-subtle: rgba(148, 163, 184, 0.16);
-      --border-gold: rgba(212, 175, 55, 0.45);
-      --accent-gold-hover: #E5C158;
-      --accent-gold-soft: rgba(212, 175, 55, 0.14);
-      --danger-soft: rgba(239, 68, 68, 0.15);
-      --success-soft: rgba(16, 185, 129, 0.15);
-      --warning: #F59E0B;
-      --warning-soft: rgba(245, 158, 11, 0.15);
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
-      --font-sans: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html, body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.5;
-      min-height: 100vh;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Bilingual helper classes */
-    .ltr-text {
-      direction: ltr;
-      unicode-bidi: embed;
-      font-family: 'Inter', var(--font-sans);
-    }
-
-    .rtl-text {
-      direction: rtl;
-      unicode-bidi: embed;
-      font-family: 'Cairo', var(--font-sans);
-    }
-
-    /* Interactive Button & Card Micro-interactions */
-    button, .interactive-card {
-      font-family: var(--font-sans);
-      cursor: pointer;
-      border: none;
-      outline: none;
-      transition: transform var(--transition-fast), opacity var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
-      user-select: none;
-    }
-
-    button:active, .interactive-card:active {
-      transform: scale(0.98);
-      opacity: 0.9;
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* ==========================================================================
-       TOP NAVIGATION HEADER (SPA Role Switcher & Status Bar)
-       ========================================================================== */
-    .app-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(15, 23, 42, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 0.75rem 1.25rem;
-    }
-
-    .header-inner {
-      max-width: 1440px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .brand-block {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .brand-crest {
-      width: 46px;
-      height: 46px;
-      border-radius: var(--radius-md);
-      background: #FFFFFF;
-      border: 2px solid var(--accent-gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
-      flex-shrink: 0;
-      overflow: hidden;
-      padding: 2px;
-    }
-
-    .brand-crest img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    .brand-titles h1 {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--text-main);
-      letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .brand-titles h1 span.gold-text {
-      color: var(--accent-gold);
-    }
-
-    .brand-subtitle {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      display: block;
-    }
-
-    /* Mode Switcher Tabs (Waiter Mobile UI vs Cashier Desktop Dashboard) */
-    .role-switcher {
-      display: flex;
-      align-items: center;
-      background: var(--bg-card);
-      padding: 0.25rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle);
-      gap: 0.25rem;
-    }
-
-    .role-tab {
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-sm);
-      background: transparent;
-      color: var(--text-muted);
-      font-weight: 700;
-      font-size: 0.875rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .role-tab.active {
-      background: var(--accent-gold);
-      color: #0F172A;
-      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      flex-wrap: wrap;
-    }
-
-    /* Cart Toggle Button inside Waiter Mode */
-    .btn-cart-toggle {
-      background: var(--bg-card);
-      color: var(--text-main);
-      border: 1px solid var(--border-gold);
-      padding: 0.5rem 0.9rem;
-      border-radius: var(--radius-md);
-      font-weight: 700;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn-cart-toggle:hover {
-      background: var(--bg-elevated);
-    }
-
-    .cart-count-badge {
-      background: var(--accent-gold);
-      color: #0F172A;
-      font-weight: 800;
-      font-size: 0.78rem;
-      padding: 0.1rem 0.5rem;
-      border-radius: 999px;
-      min-width: 24px;
-      text-align: center;
-    }
-
-    /* Audio Status / Cashier Login Unlock Button */
-    .btn-audio-unlock {
-      background: var(--bg-card);
-      color: var(--text-muted);
-      border: 1px solid var(--border-subtle);
-      padding: 0.5rem 0.8rem;
-      border-radius: var(--radius-md);
-      font-size: 0.78rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .btn-audio-unlock.unlocked {
-      border-color: rgba(16, 185, 129, 0.4);
-      color: var(--success);
-      background: var(--success-soft);
-    }
-
-    /* ==========================================================================
-       MAIN SPA CONTAINER & VIEW ROUTING
-       ========================================================================== */
-    .app-container {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 1.25rem;
-    }
-
-    /* Strict display: none / block SPA view management */
-    .spa-view {
-      display: none;
-    }
-
-    .spa-view.active-view {
-      display: block;
-      animation: fadeInView 180ms ease-out;
-    }
-
-    @keyframes fadeInView {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ==========================================================================
-       MODULE 2: WAITER UI (High-Speed Mobile-First Layout)
-       ========================================================================== */
-    .waiter-top-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-bottom: 1.25rem;
-      background: var(--bg-card);
-      padding: 1rem;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .waiter-bar-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .quick-table-bar {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      flex: 1;
-    }
-
-    .quick-table-label {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--accent-gold);
-      white-space: nowrap;
-    }
-
-    .table-select-input {
-      background: var(--bg-input);
-      color: var(--text-main);
-      border: 1px solid var(--border-gold);
-      border-radius: var(--radius-sm);
-      padding: 0.5rem 0.85rem;
-      font-family: var(--font-sans);
-      font-size: 0.9rem;
-      font-weight: 700;
-      min-width: 190px;
-      cursor: pointer;
-    }
-
-    .table-select-input:focus {
-      outline: 2px solid var(--accent-gold);
-    }
-
-    .search-input-wrap {
-      position: relative;
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .search-input {
-      width: 100%;
-      background: var(--bg-input);
-      color: var(--text-main);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 0.55rem 0.9rem;
-      font-family: var(--font-sans);
-      font-size: 0.9rem;
-    }
-
-    .search-input:focus {
-      border-color: var(--accent-gold);
-      outline: none;
-    }
-
-    /* Category Filter Pills */
-    .category-pills {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      overflow-x: auto;
-      padding-bottom: 0.25rem;
-      scrollbar-width: thin;
-    }
-
-    .category-pill {
-      background: var(--bg-input);
-      color: var(--text-muted);
-      border: 1px solid var(--border-subtle);
-      padding: 0.45rem 0.95rem;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .category-pill.active {
-      background: var(--accent-gold);
-      color: #0F172A;
-      border-color: var(--accent-gold);
-    }
-
-    /* Category Section Blocks */
-    .category-section {
-      margin-bottom: 1.5rem;
-    }
-
-    .category-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.35rem;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .category-title {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--accent-gold);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .category-count {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    /* Strict CSS Grid: auto-fill, minmax(280px, 1fr) */
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 0.75rem;
-    }
-
-    /* Compact, Horizontal, Text-Only Rectangular Menu Card (NO IMAGES) */
-    .menu-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 0.75rem 0.9rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      box-shadow: var(--shadow-card);
-      position: relative;
-      transition: transform var(--transition-fast), opacity var(--transition-fast), border-color var(--transition-fast);
-    }
-
-    .menu-card:hover {
-      border-color: var(--border-gold);
-    }
-
-    .menu-card.in-cart {
-      border-color: var(--accent-gold);
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.08), var(--bg-card));
-    }
-
-    .menu-card-names {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .menu-name-ar {
-      font-size: 0.96rem;
-      font-weight: 700;
-      color: var(--text-main);
-      line-height: 1.3;
-      word-break: break-word;
-    }
-
-    .menu-name-tr {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      font-family: 'Inter', var(--font-sans);
-      line-height: 1.25;
-    }
-
-    .menu-card-right {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      flex-shrink: 0;
-    }
-
-    .menu-price-tag {
-      font-family: 'Inter', var(--font-sans);
-      font-weight: 800;
-      font-size: 0.95rem;
-      color: var(--accent-gold);
-      background: var(--accent-gold-soft);
-      padding: 0.3rem 0.55rem;
-      border-radius: var(--radius-sm);
-      white-space: nowrap;
-      direction: ltr;
-    }
-
-    .btn-add-item {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-sm);
-      background: var(--accent-gold);
-      color: #0F172A;
-      font-size: 1.25rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-    }
-
-    .btn-add-item:hover {
-      background: var(--accent-gold-hover);
-    }
-
-    .item-qty-indicator {
-      position: absolute;
-      top: -6px;
-      left: -6px;
-      background: var(--success);
-      color: #0F172A;
-      font-size: 0.7rem;
-      font-weight: 800;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--bg-card);
-    }
-
-    /* ==========================================================================
-       MODULE 2B: DEDICATED FULL-SCREEN CART VIEW (SPA Routing: display: none/block)
-       ========================================================================== */
-    .cart-fullscreen-wrapper {
-      max-width: 780px;
-      margin: 0 auto;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      box-shadow: var(--shadow-card);
-    }
-
-    .cart-view-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding-bottom: 1rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid var(--border-subtle);
-      flex-wrap: wrap;
-    }
-
-    .cart-view-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn-back-menu {
-      background: var(--bg-elevated);
-      color: var(--text-main);
-      border: 1px solid var(--border-subtle);
-      padding: 0.5rem 0.95rem;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    /* Required Table Selection Box in Cart */
-    .cart-table-requirement-box {
-      background: var(--bg-input);
-      border: 1px solid var(--border-gold);
-      border-radius: var(--radius-md);
-      padding: 0.9rem 1rem;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .cart-table-requirement-box.error-highlight {
-      border-color: var(--danger);
-      background: var(--danger-soft);
-      animation: shakeError 300ms ease-in-out;
-    }
-
-    @keyframes shakeError {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-
-    .cart-items-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-      margin-bottom: 1.25rem;
-    }
-
-    /* Strict Clean Cart Row: ONLY Item Name, Qty Controls (+ / -), Price, Trash Icon */
-    .cart-item-row {
-      background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 0.75rem 0.95rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .cart-item-info {
-      flex: 1;
-      min-width: 150px;
-    }
-
-    .cart-item-title-ar {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--text-main);
-    }
-
-    .cart-item-title-tr {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      font-family: 'Inter', var(--font-sans);
-    }
-
-    .cart-item-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-    }
-
-    .qty-stepper {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      background: var(--bg-card);
-      padding: 0.2rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .btn-qty {
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
-      background: var(--bg-elevated);
-      color: var(--text-main);
-      font-weight: 800;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .btn-qty:hover {
-      background: var(--accent-gold);
-      color: #0F172A;
-    }
-
-    .qty-value {
-      font-family: 'Inter', var(--font-sans);
-      font-weight: 800;
-      font-size: 0.95rem;
-      min-width: 26px;
-      text-align: center;
-    }
-
-    .cart-item-price {
-      font-family: 'Inter', var(--font-sans);
-      font-weight: 800;
-      font-size: 0.95rem;
-      color: var(--accent-gold);
-      min-width: 75px;
-      text-align: left;
-      direction: ltr;
-    }
-
-    .btn-trash {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius-sm);
-      background: var(--danger-soft);
-      color: var(--danger);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(239, 68, 68, 0.3);
-    }
-
-    .btn-trash:hover {
-      background: var(--danger);
-      color: #fff;
-    }
-
-    .cart-empty-state {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      color: var(--text-muted);
-    }
-
-    .cart-summary-footer {
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-
-    .cart-total-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 1.2rem;
-      font-weight: 800;
-    }
-
-    .cart-total-amount {
-      color: var(--accent-gold);
-      font-family: 'Inter', var(--font-sans);
-      font-size: 1.45rem;
-      direction: ltr;
-    }
-
-    .cart-footer-actions {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-submit-order {
-      flex: 2;
-      background: var(--success);
-      color: #0F172A;
-      font-weight: 800;
-      font-size: 1rem;
-      padding: 0.85rem 1.25rem;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      min-width: 200px;
-    }
-
-    .btn-clear-cart {
-      flex: 1;
-      background: var(--danger-soft);
-      color: var(--danger);
-      border: 1px solid rgba(239, 68, 68, 0.35);
-      font-weight: 700;
-      font-size: 0.9rem;
-      padding: 0.85rem 1rem;
-      border-radius: var(--radius-md);
-      min-width: 120px;
-    }
-
-    /* ==========================================================================
-       MODULE 3: CASHIER DASHBOARD (Kanban Board, Audio Unlock & Pulse Alerts)
-       ========================================================================== */
-    .cashier-toolbar {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .cashier-stats-strip {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-    }
-
-    .stat-pill {
-      display: flex;
-      flex-direction: column;
-      background: var(--bg-input);
-      padding: 0.5rem 0.9rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-subtle);
-      min-width: 130px;
-    }
-
-    .stat-pill-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .stat-pill-value {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--accent-gold);
-      font-family: 'Inter', var(--font-sans);
-      direction: ltr;
-      text-align: right;
-    }
-
-    .cashier-action-buttons {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-gold {
-      background: var(--accent-gold);
-      color: #0F172A;
-      font-weight: 800;
-      font-size: 0.85rem;
-      padding: 0.6rem 1rem;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-    }
-
-    .btn-secondary {
-      background: var(--bg-elevated);
-      color: var(--text-main);
-      border: 1px solid var(--border-subtle);
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 0.6rem 1rem;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-    }
-
-    /* 3-Column Kanban Grid: New Orders | Preparing | Completed */
-    .kanban-board {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.1rem;
-      align-items: start;
-    }
-
-    @media (max-width: 1024px) {
-      .kanban-board {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .kanban-column {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 1rem;
-      min-height: 480px;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-
-    .kanban-col-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid var(--border-subtle);
-    }
-
-    .kanban-col-new .kanban-col-header {
-      border-bottom-color: var(--danger);
-    }
-
-    .kanban-col-preparing .kanban-col-header {
-      border-bottom-color: var(--accent-gold);
-    }
-
-    .kanban-col-completed .kanban-col-header {
-      border-bottom-color: var(--success);
-    }
-
-    .kanban-col-title {
-      font-size: 1rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .kanban-col-count {
-      font-family: 'Inter', var(--font-sans);
-      font-size: 0.8rem;
-      font-weight: 800;
-      padding: 0.15rem 0.6rem;
-      border-radius: 999px;
-      background: var(--bg-input);
-      color: var(--text-main);
-    }
-
-    .kanban-cards-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-
-    /* Order Card & Visual Pulse Animation for Newly Injected Orders */
-    .order-card {
-      background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 0.95rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      box-shadow: var(--shadow-card);
-    }
-
-    @keyframes newOrderPulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.85), 0 0 20px rgba(239, 68, 68, 0.6);
-        border-color: var(--accent-gold);
-        transform: scale(1.01);
-      }
-      50% {
-        box-shadow: 0 0 0 12px rgba(212, 175, 55, 0), 0 0 30px rgba(212, 175, 55, 0.4);
-        border-color: var(--danger);
-        transform: scale(1);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
-        border-color: var(--accent-gold);
-        transform: scale(1);
-      }
-    }
-
-    .order-card.pulse-new {
-      animation: newOrderPulse 1.4s ease-in-out 4;
-      border-color: var(--accent-gold);
-    }
-
-    .order-card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      border-bottom: 1px dashed var(--border-subtle);
-      padding-bottom: 0.55rem;
-    }
-
-    .order-id-badge {
-      font-family: 'Inter', var(--font-sans);
-      font-weight: 800;
-      font-size: 0.9rem;
-      color: var(--accent-gold);
-      direction: ltr;
-    }
-
-    .order-table-badge {
-      background: var(--accent-gold-soft);
-      color: var(--accent-gold);
-      border: 1px solid var(--border-gold);
-      padding: 0.2rem 0.6rem;
-      border-radius: 6px;
-      font-weight: 800;
-      font-size: 0.8rem;
-    }
-
-    .order-time {
-      font-family: 'Inter', var(--font-sans);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      direction: ltr;
-    }
-
-    .order-items-mini-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      font-size: 0.85rem;
-    }
-
-    .order-item-line {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-
-    .order-item-qty {
-      font-family: 'Inter', var(--font-sans);
-      font-weight: 800;
-      color: var(--accent-gold);
-      margin-left: 0.35rem;
-    }
-
-    .order-item-line-price {
-      font-family: 'Inter', var(--font-sans);
-      font-weight: 700;
-      color: var(--text-muted);
-      direction: ltr;
-      white-space: nowrap;
-    }
-
-    .order-card-footer {
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 0.65rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .order-card-total {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 800;
-      font-size: 0.95rem;
-    }
-
-    .order-card-total-val {
-      font-family: 'Inter', var(--font-sans);
-      color: var(--accent-gold);
-      font-size: 1.05rem;
-      direction: ltr;
-    }
-
-    .order-card-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-card-action {
-      flex: 1;
-      padding: 0.48rem 0.65rem;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-      white-space: nowrap;
-    }
-
-    .btn-prepare {
-      background: var(--accent-gold);
-      color: #0F172A;
-    }
-
-    .btn-complete {
-      background: var(--success);
-      color: #0F172A;
-    }
-
-    .btn-print {
-      background: var(--bg-elevated);
-      color: var(--text-main);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .btn-cancel-order {
-      background: var(--danger-soft);
-      color: var(--danger);
-      flex: 0 0 auto;
-    }
-
-    /* ==========================================================================
-       MODAL SYSTEM (80mm Receipt, Price Editor, & Operations Guide)
-       ========================================================================== */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 900;
-      background: rgba(15, 23, 42, 0.82);
-      backdrop-filter: blur(6px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .modal-dialog {
-      background: var(--bg-card);
-      border: 1px solid var(--border-gold);
-      border-radius: var(--radius-lg);
-      max-width: 540px;
-      width: 100%;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-      overflow: hidden;
-    }
-
-    .modal-dialog.wide-modal {
-      max-width: 780px;
-    }
-
-    .modal-header {
-      padding: 0.9rem 1.15rem;
-      border-bottom: 1px solid var(--border-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .modal-header h3 {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--accent-gold);
-    }
-
-    .modal-body {
-      padding: 1.15rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .modal-footer {
-      padding: 0.85rem 1.15rem;
-      border-top: 1px solid var(--border-subtle);
-      display: flex;
-      gap: 0.65rem;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-
-    /* Visual POS-58 / POS-80 Paper Preview Card inside Modal */
-    .thermal-paper-preview {
-      width: 58mm;
-      max-width: 100%;
-      margin: 0 auto;
-      background: #FFFFFF;
-      color: #000000;
-      padding: 2mm 3mm;
-      border-radius: 4px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-      font-family: 'Cairo', 'Inter', monospace;
-      transition: width 150ms ease;
-    }
-
-    .thermal-paper-preview.paper-80mm {
-      width: 80mm;
-      padding: 4mm;
-    }
-
-    .printer-calibration-bar {
-      width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 0.65rem 0.85rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-    }
-
-    .calibration-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    /* Price Editor List Row */
-    .price-editor-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 0.55rem 0.85rem;
-    }
-
-    .price-editor-input {
-      width: 95px;
-      background: var(--bg-card);
-      color: var(--accent-gold);
-      border: 1px solid var(--border-gold);
-      border-radius: 6px;
-      padding: 0.35rem 0.5rem;
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: 0.9rem;
-      text-align: center;
-      direction: ltr;
-    }
-
-    /* Operations Guide Steps */
-    .guide-step-card {
-      background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
-      border-right: 4px solid var(--accent-gold);
-      border-radius: var(--radius-sm);
-      padding: 0.85rem 1rem;
-    }
-
-    .guide-step-card h4 {
-      color: var(--accent-gold);
-      font-size: 0.95rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .guide-step-card p {
-      font-size: 0.85rem;
-      color: var(--text-main);
-      line-height: 1.6;
-    }
-
-    /* ==========================================================================
-       TOAST NOTIFICATION SYSTEM (Replaces all native browser alert() calls)
-       ========================================================================== */
-    .toast-container {
-      position: fixed;
-      bottom: 1.25rem;
-      left: 1.25rem;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      max-width: 360px;
-      width: calc(100% - 2.5rem);
-      pointer-events: none;
-    }
-
-    .toast-item {
-      pointer-events: auto;
-      background: var(--bg-card);
-      color: var(--text-main);
-      border: 1px solid var(--border-subtle);
-      border-right: 4px solid var(--accent-gold);
-      border-radius: var(--radius-md);
-      padding: 0.8rem 1rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      font-size: 0.88rem;
-      font-weight: 700;
-      animation: toastSlideIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .toast-item.toast-success {
-      border-right-color: var(--success);
-    }
-
-    .toast-item.toast-danger {
-      border-right-color: var(--danger);
-    }
-
-    @keyframes toastSlideIn {
-      from { opacity: 0; transform: translateY(12px) scale(0.96); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    /* ==========================================================================
-       MODULE 4: AL-AMEEN STYLE THERMAL PRINTING & STRICT @media print CSS
-       ========================================================================== */
-    #print-section {
-      display: none;
-    }
-
-    :root {
-      --print-paper-width: 58mm;
-      --print-content-width: 48mm;
-      --print-offset-x: 0mm;
-    }
-
-    .receipt-wrapper {
-      width: var(--print-content-width);
-      max-width: 100%;
-      margin: 0 auto;
-      transform: translateX(var(--print-offset-x));
-      color: #000000;
-      background: #FFFFFF;
-      font-family: 'Cairo', 'Inter', sans-serif;
-      font-size: 11px;
-      line-height: 1.3;
-      text-align: center;
-      box-sizing: border-box;
-    }
-
-    .receipt-logo-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0 auto 3px auto;
-    }
-
-    .receipt-logo-img {
-      width: 24mm;
-      max-width: 90px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      filter: contrast(1.35) grayscale(100%);
-    }
-
-    .receipt-header {
-      text-align: center;
-      border-bottom: 1.5px dashed #000;
-      padding-bottom: 5px;
-      margin-bottom: 5px;
-    }
-
-    .receipt-brand-ar {
-      font-size: 14px;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .receipt-brand-tr {
-      font-size: 11px;
-      font-weight: 700;
-      font-family: 'Inter', sans-serif;
-      text-align: center;
-    }
-
-    .receipt-meta {
-      font-size: 10px;
-      margin-bottom: 5px;
-      border-bottom: 1px dashed #000;
-      padding-bottom: 5px;
-      text-align: right;
-    }
-
-    .receipt-meta-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .receipt-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 0 auto 6px auto;
-      font-size: 10px;
-      table-layout: fixed;
-    }
-
-    .receipt-table th {
-      border-bottom: 1.5px solid #000;
-      padding: 2px 1px;
-      text-align: right;
-      font-weight: 800;
-    }
-
-    .receipt-table td {
-      padding: 3px 1px;
-      border-bottom: 1px dotted #444;
-      vertical-align: top;
-      text-align: right;
-      word-wrap: break-word;
-    }
-
-    .receipt-table th.col-qty,
-    .receipt-table td.col-qty {
-      width: 14%;
-      text-align: center;
-      font-family: 'Inter', monospace;
-      font-weight: 800;
-    }
-
-    .receipt-table th.col-item,
-    .receipt-table td.col-item {
-      width: 46%;
-      text-align: right;
-    }
-
-    .receipt-table th.col-price,
-    .receipt-table td.col-price {
-      width: 19%;
-      text-align: left;
-      direction: ltr;
-      font-family: 'Inter', monospace;
-      white-space: nowrap;
-    }
-
-    .receipt-table th.col-total,
-    .receipt-table td.col-total {
-      width: 21%;
-      text-align: left;
-      direction: ltr;
-      font-family: 'Inter', monospace;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .receipt-total-block {
-      border-top: 2px solid #000;
-      padding-top: 5px;
-      margin-top: 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12.5px;
-      font-weight: 800;
-    }
-
-    .receipt-footer {
-      text-align: center;
-      margin-top: 6px;
-      padding-top: 5px;
-      border-top: 1px dashed #000;
-      font-size: 9.5px;
-    }
-
-    /* STRICT POS-58 (58MM) & POS-80 CENTERED THERMAL PRINT MEDIA QUERY */
-    @media print {
-      @page {
-        size: 58mm auto;
-        margin: 0mm !important;
-      }
-
-      html, body {
-        width: var(--print-paper-width) !important;
-        max-width: var(--print-paper-width) !important;
-        margin: 0 auto !important;
-        padding: 0 !important;
-        background: #FFFFFF !important;
-        color: #000000 !important;
-        overflow: visible !important;
-        text-align: center !important;
-      }
-
-      /* Hide all UI chrome, buttons, navbars, modals, and toasts */
-      .app-header,
-      .app-container,
-      .modal-backdrop,
-      .toast-container,
-      button,
-      nav {
-        display: none !important;
-      }
-
-      /* Force #print-section to exact centered POS-58 roll width */
-      #print-section {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        width: var(--print-paper-width) !important;
-        max-width: var(--print-paper-width) !important;
-        margin: 0 auto !important;
-        padding: 1mm 0mm !important;
-        background: #FFFFFF !important;
-        color: #000000 !important;
-        box-sizing: border-box !important;
-      }
-
-      #print-section .receipt-wrapper {
-        width: var(--print-content-width) !important;
-        margin: 0 auto !important;
-        transform: translateX(var(--print-offset-x)) !important;
-      }
-    }
+   GLOBAL DESIGN SYSTEM (Premium Dark Mode)
+   Strict adherence to requested CSS Custom Properties & Interaction tokens
+   ========================================================================== */
+:root {
+  --bg-main: #0F172A;
+  --bg-card: #1E293B;
+  --accent-gold: #D4AF37;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --danger: #EF4444;
+  --success: #10B981;
+
+  /* Derived surface & border tokens for depth and crisp contrast */
+  --bg-elevated: #26354D;
+  --bg-input: #0B1120;
+  --border-subtle: rgba(148, 163, 184, 0.16);
+  --border-gold: rgba(212, 175, 55, 0.45);
+  --accent-gold-hover: #E5C158;
+  --accent-gold-soft: rgba(212, 175, 55, 0.14);
+  --danger-soft: rgba(239, 68, 68, 0.15);
+  --success-soft: rgba(16, 185, 129, 0.15);
+  --warning: #F59E0B;
+  --warning-soft: rgba(245, 158, 11, 0.15);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+  --font-sans: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Bilingual helper classes */
+.ltr-text {
+  direction: ltr;
+  unicode-bidi: embed;
+  font-family: 'Inter', var(--font-sans);
+}
+
+.rtl-text {
+  direction: rtl;
+  unicode-bidi: embed;
+  font-family: 'Cairo', var(--font-sans);
+}
+
+/* Interactive Button & Card Micro-interactions */
+button, .interactive-card {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: transform var(--transition-fast), opacity var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  user-select: none;
+}
+
+button:active, .interactive-card:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==========================================================================
+   TOP NAVIGATION HEADER (SPA Role Switcher & Status Bar)
+   ========================================================================== */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.75rem 1.25rem;
+}
+
+.header-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-crest {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--accent-gold), #AA8214);
+  color: #0F172A;
+  font-weight: 800;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+  flex-shrink: 0;
+}
+
+.brand-titles h1 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.brand-titles h1 span.gold-text {
+  color: var(--accent-gold);
+}
+
+.brand-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+/* Mode Switcher Tabs (Waiter Mobile UI vs Cashier Desktop Dashboard) */
+.role-switcher {
+  display: flex;
+  align-items: center;
+  background: var(--bg-card);
+  padding: 0.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  gap: 0.25rem;
+}
+
+.role-tab {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.role-tab.active {
+  background: var(--accent-gold);
+  color: #0F172A;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+/* Cart Toggle Button inside Waiter Mode */
+.btn-cart-toggle {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-gold);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-cart-toggle:hover {
+  background: var(--bg-elevated);
+}
+
+.cart-count-badge {
+  background: var(--accent-gold);
+  color: #0F172A;
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  min-width: 24px;
+  text-align: center;
+}
+
+:root {
+  --print-paper-width: 58mm;
+  --print-content-width: 48mm;
+  --print-offset-x: 0mm;
+}
+
+.receipt-wrapper {
+  width: var(--print-content-width);
+  max-width: 100%;
+  margin: 0 auto;
+  transform: translateX(var(--print-offset-x));
+  color: #000000;
+  background: #FFFFFF;
+  font-family: 'Cairo', 'Inter', sans-serif;
+  font-size: 11px;
+  line-height: 1.3;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.receipt-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 3px auto;
+}
+
+.receipt-logo-img {
+  width: 24mm;
+  max-width: 90px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: contrast(1.35) grayscale(100%);
+}
+
+@media print {
+  @page {
+    size: 58mm auto;
+    margin: 0mm !important;
+  }
+
+  html, body {
+    width: var(--print-paper-width) !important;
+    max-width: var(--print-paper-width) !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    overflow: visible !important;
+    text-align: center !important;
+  }
+
+  .app-header, .app-container, .modal-backdrop, .toast-container, button, nav {
+    display: none !important;
+  }
+
+  #print-section {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: var(--print-paper-width) !important;
+    max-width: var(--print-paper-width) !important;
+    margin: 0 auto !important;
+    padding: 1mm 0mm !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    box-sizing: border-box !important;
+  }
+
+  #print-section .receipt-wrapper {
+    width: var(--print-content-width) !important;
+    margin: 0 auto !important;
+    transform: translateX(var(--print-offset-x)) !important;
+  }
+}
+/* Audio Status / Cashier Login Unlock Button */
+.btn-audio-unlock {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-audio-unlock.unlocked {
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+/* ==========================================================================
+   MAIN SPA CONTAINER & VIEW ROUTING
+   ========================================================================== */
+.app-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+/* Strict display: none / block SPA view management */
+.spa-view {
+  display: none;
+}
+
+.spa-view.active-view {
+  display: block;
+  animation: fadeInView 180ms ease-out;
+}
+
+@keyframes fadeInView {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   MODULE 2: WAITER UI (High-Speed Mobile-First Layout)
+   ========================================================================== */
+.waiter-top-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+.waiter-bar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.quick-table-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.quick-table-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  white-space: nowrap;
+}
+
+.table-select-input {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  min-width: 190px;
+  cursor: pointer;
+}
+
+.table-select-input:focus {
+  outline: 2px solid var(--accent-gold);
+}
+
+.search-input-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+}
+
+.search-input:focus {
+  border-color: var(--accent-gold);
+  outline: none;
+}
+
+/* Category Filter Pills */
+.category-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+}
+
+.category-pill {
+  background: var(--bg-input);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.category-pill.active {
+  background: var(--accent-gold);
+  color: #0F172A;
+  border-color: var(--accent-gold);
+}
+
+/* Category Section Blocks */
+.category-section {
+  margin-bottom: 1.5rem;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.category-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-count {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Strict CSS Grid: auto-fill, minmax(280px, 1fr) */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+
+/* Compact, Horizontal, Text-Only Rectangular Menu Card (NO IMAGES) */
+.menu-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  transition: transform var(--transition-fast), opacity var(--transition-fast), border-color var(--transition-fast);
+}
+
+.menu-card:hover {
+  border-color: var(--border-gold);
+}
+
+.menu-card.in-cart {
+  border-color: var(--accent-gold);
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.08), var(--bg-card));
+}
+
+.menu-card-names {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.menu-name-ar {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.menu-name-tr {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-family: 'Inter', var(--font-sans);
+  line-height: 1.25;
+}
+
+.menu-card-right {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.menu-price-tag {
+  font-family: 'Inter', var(--font-sans);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  background: var(--accent-gold-soft);
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  direction: ltr;
+}
+
+.btn-add-item {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-gold);
+  color: #0F172A;
+  font-size: 1.25rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.btn-add-item:hover {
+  background: var(--accent-gold-hover);
+}
+
+.item-qty-indicator {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  background: var(--success);
+  color: #0F172A;
+  font-size: 0.7rem;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-card);
+}
+
+/* ==========================================================================
+   MODULE 2B: DEDICATED FULL-SCREEN CART VIEW (SPA Routing: display: none/block)
+   ========================================================================== */
+.cart-fullscreen-wrapper {
+  max-width: 780px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+.cart-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+
+.cart-view-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-back-menu {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Required Table Selection Box in Cart */
+.cart-table-requirement-box {
+  background: var(--bg-input);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cart-table-requirement-box.error-highlight {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+  animation: shakeError 300ms ease-in-out;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.cart-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Strict Clean Cart Row: ONLY Item Name, Qty Controls (+ / -), Price, Trash Icon */
+.cart-item-row {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cart-item-info {
+  flex: 1;
+  min-width: 150px;
+}
+
+.cart-item-title-ar {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.cart-item-title-tr {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: 'Inter', var(--font-sans);
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.qty-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bg-card);
+  padding: 0.2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-qty {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-qty:hover {
+  background: var(--accent-gold);
+  color: #0F172A;
+}
+
+.qty-value {
+  font-family: 'Inter', var(--font-sans);
+  font-weight: 800;
+  font-size: 0.95rem;
+  min-width: 26px;
+  text-align: center;
+}
+
+.cart-item-price {
+  font-family: 'Inter', var(--font-sans);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  min-width: 75px;
+  text-align: left;
+  direction: ltr;
+}
+
+.btn-trash {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--danger-soft);
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.btn-trash:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.cart-empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--text-muted);
+}
+
+.cart-summary-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.cart-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.cart-total-amount {
+  color: var(--accent-gold);
+  font-family: 'Inter', var(--font-sans);
+  font-size: 1.45rem;
+  direction: ltr;
+}
+
+.cart-footer-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-submit-order {
+  flex: 2;
+  background: var(--success);
+  color: #0F172A;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 200px;
+}
+
+.btn-clear-cart {
+  flex: 1;
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  min-width: 120px;
+}
+
+/* ==========================================================================
+   MODULE 3: CASHIER DASHBOARD (Kanban Board, Audio Unlock & Pulse Alerts)
+   ========================================================================== */
+.cashier-toolbar {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cashier-stats-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-input);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  min-width: 130px;
+}
+
+.stat-pill-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.stat-pill-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  font-family: 'Inter', var(--font-sans);
+  direction: ltr;
+  text-align: right;
+}
+
+.cashier-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.btn-gold {
+  background: var(--accent-gold);
+  color: #0F172A;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.btn-secondary {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* 3-Column Kanban Grid: New Orders | Preparing | Completed */
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kanban-column {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.kanban-col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border-subtle);
+}
+
+.kanban-col-new .kanban-col-header {
+  border-bottom-color: var(--danger);
+}
+
+.kanban-col-preparing .kanban-col-header {
+  border-bottom-color: var(--accent-gold);
+}
+
+.kanban-col-completed .kanban-col-header {
+  border-bottom-color: var(--success);
+}
+
+.kanban-col-title {
+  font-size: 1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.kanban-col-count {
+  font-family: 'Inter', var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--bg-input);
+  color: var(--text-main);
+}
+
+.kanban-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Order Card & Visual Pulse Animation for Newly Injected Orders */
+.order-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: var(--shadow-card);
+}
+
+@keyframes newOrderPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.85), 0 0 20px rgba(239, 68, 68, 0.6);
+    border-color: var(--accent-gold);
+    transform: scale(1.01);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(212, 175, 55, 0), 0 0 30px rgba(212, 175, 55, 0.4);
+    border-color: var(--danger);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    border-color: var(--accent-gold);
+    transform: scale(1);
+  }
+}
+
+.order-card.pulse-new {
+  animation: newOrderPulse 1.4s ease-in-out 4;
+  border-color: var(--accent-gold);
+}
+
+.order-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-bottom: 1px dashed var(--border-subtle);
+  padding-bottom: 0.55rem;
+}
+
+.order-id-badge {
+  font-family: 'Inter', var(--font-sans);
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--accent-gold);
+  direction: ltr;
+}
+
+.order-table-badge {
+  background: var(--accent-gold-soft);
+  color: var(--accent-gold);
+  border: 1px solid var(--border-gold);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.order-time {
+  font-family: 'Inter', var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  direction: ltr;
+}
+
+.order-items-mini-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.order-item-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.order-item-qty {
+  font-family: 'Inter', var(--font-sans);
+  font-weight: 800;
+  color: var(--accent-gold);
+  margin-left: 0.35rem;
+}
+
+.order-item-line-price {
+  font-family: 'Inter', var(--font-sans);
+  font-weight: 700;
+  color: var(--text-muted);
+  direction: ltr;
+  white-space: nowrap;
+}
+
+.order-card-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.order-card-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.order-card-total-val {
+  font-family: 'Inter', var(--font-sans);
+  color: var(--accent-gold);
+  font-size: 1.05rem;
+  direction: ltr;
+}
+
+.order-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.btn-card-action {
+  flex: 1;
+  padding: 0.48rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+}
+
+.btn-prepare {
+  background: var(--accent-gold);
+  color: #0F172A;
+}
+
+.btn-complete {
+  background: var(--success);
+  color: #0F172A;
+}
+
+.btn-print {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-cancel-order {
+  background: var(--danger-soft);
+  color: var(--danger);
+  flex: 0 0 auto;
+}
+
+/* ==========================================================================
+   MODAL SYSTEM (80mm Receipt, Price Editor, & Operations Guide)
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal-dialog {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  max-width: 540px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.modal-dialog.wide-modal {
+  max-width: 780px;
+}
+
+.modal-header {
+  padding: 0.9rem 1.15rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+}
+
+.modal-body {
+  padding: 1.15rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-footer {
+  padding: 0.85rem 1.15rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  gap: 0.65rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* Visual 80mm Paper Preview Card inside Modal */
+.thermal-paper-preview {
+  width: 80mm;
+  max-width: 100%;
+  margin: 0 auto;
+  background: #FFFFFF;
+  color: #000000;
+  padding: 4mm;
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  font-family: 'Cairo', 'Inter', monospace;
+}
+
+/* Price Editor List Row */
+.price-editor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.85rem;
+}
+
+.price-editor-input {
+  width: 95px;
+  background: var(--bg-card);
+  color: var(--accent-gold);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 0.35rem 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-align: center;
+  direction: ltr;
+}
+
+/* Operations Guide Steps */
+.guide-step-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-right: 4px solid var(--accent-gold);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+}
+
+.guide-step-card h4 {
+  color: var(--accent-gold);
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+
+.guide-step-card p {
+  font-size: 0.85rem;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATION SYSTEM (Replaces all native browser alert() calls)
+   ========================================================================== */
+.toast-container {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 360px;
+  width: calc(100% - 2.5rem);
+  pointer-events: none;
+}
+
+.toast-item {
+  pointer-events: auto;
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  border-right: 4px solid var(--accent-gold);
+  border-radius: var(--radius-md);
+  padding: 0.8rem 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  animation: toastSlideIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-item.toast-success {
+  border-right-color: var(--success);
+}
+
+.toast-item.toast-danger {
+  border-right-color: var(--danger);
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ==========================================================================
+   MODULE 4: AL-AMEEN STYLE THERMAL PRINTING & STRICT @media print CSS
+   ========================================================================== */
+#print-section {
+  display: none;
+}
+
+.receipt-wrapper {
+  width: 100%;
+  color: #000000;
+  background: #FFFFFF;
+  font-family: 'Cairo', 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.receipt-header {
+  text-align: center;
+  border-bottom: 2px dashed #000;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+.receipt-brand-ar {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.receipt-brand-tr {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+
+.receipt-meta {
+  font-size: 11px;
+  margin-bottom: 6px;
+  border-bottom: 1px dashed #000;
+  padding-bottom: 6px;
+}
+
+.receipt-meta-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+  font-size: 11px;
+}
+
+.receipt-table th {
+  border-bottom: 1.5px solid #000;
+  padding: 3px 2px;
+  text-align: right;
+  font-weight: 800;
+}
+
+.receipt-table td {
+  padding: 4px 2px;
+  border-bottom: 1px dotted #555;
+  vertical-align: top;
+}
+
+.receipt-table th.num-col,
+.receipt-table td.num-col {
+  text-align: left;
+  direction: ltr;
+  font-family: 'Inter', monospace;
+  white-space: nowrap;
+}
+
+.receipt-total-block {
+  border-top: 2px solid #000;
+  padding-top: 6px;
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.receipt-footer {
+  text-align: center;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed #000;
+  font-size: 10px;
+}
+
+/* STRICT 80MM THERMAL PRINT MEDIA QUERY */
+@media print {
+  @page {
+    size: 80mm auto;
+    margin: 0;
+  }
+
+  html, body {
+    width: 80mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    overflow: visible !important;
+  }
+
+  /* Hide all UI chrome, buttons, navbars, modals, and toasts */
+  .app-header,
+  .app-container,
+  .modal-backdrop,
+  .toast-container,
+  button,
+  nav {
+    display: none !important;
+  }
+
+  /* Force #print-section to 80mm thermal paper width */
+  #print-section {
+    display: block !important;
+    width: 80mm !important;
+    margin: 0 !important;
+    padding: 2mm 3mm !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+}
