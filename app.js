@@ -1387,6 +1387,7 @@ function initPosApp() {
 }
 
 window.addEventListener('DOMContentLoaded', initPosApp);
+
 function setThermalPaperSize(sizeMm) {
   const root = document.documentElement;
   const preview = document.getElementById('modal-thermal-preview');
@@ -1426,4 +1427,11 @@ function setThermalPaperSize(sizeMm) {
       }
     }
   `;
+}
+
+function setThermalOffset(offsetMm) {
+  const val = Number(offsetMm) || 0;
+  document.documentElement.style.setProperty('--print-offset-x', `${val}mm`);
+  const lbl = document.getElementById('print-offset-label');
+  if (lbl) lbl.textContent = `${val > 0 ? '+' : ''}${val}mm`;
 }
