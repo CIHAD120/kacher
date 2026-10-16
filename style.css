@@ -11,7 +11,6 @@
   --danger: #EF4444;
   --success: #10B981;
 
-  /* Derived surface & border tokens for depth and crisp contrast */
   --bg-elevated: #26354D;
   --bg-input: #0B1120;
   --border-subtle: rgba(148, 163, 184, 0.16);
@@ -48,7 +47,6 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Bilingual helper classes */
 .ltr-text {
   direction: ltr;
   unicode-bidi: embed;
@@ -61,7 +59,6 @@ html, body {
   font-family: 'Cairo', var(--font-sans);
 }
 
-/* Interactive Button & Card Micro-interactions */
 button, .interactive-card {
   font-family: var(--font-sans);
   cursor: pointer;
@@ -82,9 +79,6 @@ button:disabled {
   transform: none;
 }
 
-/* ==========================================================================
-   TOP NAVIGATION HEADER (SPA Role Switcher & Status Bar)
-   ========================================================================== */
 .app-header {
   position: sticky;
   top: 0;
@@ -147,7 +141,6 @@ button:disabled {
   display: block;
 }
 
-/* Mode Switcher Tabs (Waiter Mobile UI vs Cashier Desktop Dashboard) */
 .role-switcher {
   display: flex;
   align-items: center;
@@ -183,7 +176,6 @@ button:disabled {
   flex-wrap: wrap;
 }
 
-/* Cart Toggle Button inside Waiter Mode */
 .btn-cart-toggle {
   background: var(--bg-card);
   color: var(--text-main);
@@ -212,7 +204,6 @@ button:disabled {
   text-align: center;
 }
 
-/* Audio Status / Cashier Login Unlock Button */
 .btn-audio-unlock {
   background: var(--bg-card);
   color: var(--text-muted);
@@ -232,16 +223,12 @@ button:disabled {
   background: var(--success-soft);
 }
 
-/* ==========================================================================
-   MAIN SPA CONTAINER & VIEW ROUTING
-   ========================================================================== */
 .app-container {
   max-width: 1440px;
   margin: 0 auto;
   padding: 1.25rem;
 }
 
-/* Strict display: none / block SPA view management */
 .spa-view {
   display: none;
 }
@@ -256,9 +243,6 @@ button:disabled {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ==========================================================================
-   MODULE 2: WAITER UI (High-Speed Mobile-First Layout)
-   ========================================================================== */
 .waiter-top-controls {
   display: flex;
   flex-direction: column;
@@ -332,7 +316,6 @@ button:disabled {
   outline: none;
 }
 
-/* Category Filter Pills */
 .category-pills {
   display: flex;
   align-items: center;
@@ -360,7 +343,6 @@ button:disabled {
   border-color: var(--accent-gold);
 }
 
-/* Category Section Blocks */
 .category-section {
   margin-bottom: 1.5rem;
 }
@@ -389,14 +371,12 @@ button:disabled {
   font-weight: 600;
 }
 
-/* Strict CSS Grid: auto-fill, minmax(280px, 1fr) */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 0.75rem;
 }
 
-/* Compact, Horizontal, Text-Only Rectangular Menu Card (NO IMAGES) */
 .menu-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -499,9 +479,6 @@ button:disabled {
   border: 2px solid var(--bg-card);
 }
 
-/* ==========================================================================
-   MODULE 2B: DEDICATED FULL-SCREEN CART VIEW (SPA Routing: display: none/block)
-   ========================================================================== */
 .cart-fullscreen-wrapper {
   max-width: 780px;
   margin: 0 auto;
@@ -545,7 +522,6 @@ button:disabled {
   gap: 0.4rem;
 }
 
-/* Required Table Selection Box in Cart */
 .cart-table-requirement-box {
   background: var(--bg-input);
   border: 1px solid var(--border-gold);
@@ -578,7 +554,6 @@ button:disabled {
   margin-bottom: 1.25rem;
 }
 
-/* Strict Clean Cart Row: ONLY Item Name, Qty Controls (+ / -), Price, Trash Icon */
 .cart-item-row {
   background: var(--bg-input);
   border: 1px solid var(--border-subtle);
@@ -739,9 +714,6 @@ button:disabled {
   min-width: 120px;
 }
 
-/* ==========================================================================
-   MODULE 3: CASHIER DASHBOARD (Kanban Board, Audio Unlock & Pulse Alerts)
-   ========================================================================== */
 .cashier-toolbar {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -818,7 +790,6 @@ button:disabled {
   gap: 0.45rem;
 }
 
-/* 3-Column Kanban Grid: New Orders | Preparing | Completed */
 .kanban-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -887,7 +858,6 @@ button:disabled {
   gap: 0.85rem;
 }
 
-/* Order Card & Visual Pulse Animation for Newly Injected Orders */
 .order-card {
   background: var(--bg-input);
   border: 1px solid var(--border-subtle);
@@ -1050,9 +1020,6 @@ button:disabled {
   flex: 0 0 auto;
 }
 
-/* ==========================================================================
-   MODAL SYSTEM (80mm Receipt, Price Editor, & Operations Guide)
-   ========================================================================== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -1117,9 +1084,8 @@ button:disabled {
   flex-wrap: wrap;
 }
 
-/* Visual 80mm Paper Preview Card inside Modal */
 .thermal-paper-preview {
-  width: 80mm;
+  width: var(--print-paper-width, 58mm);
   max-width: 100%;
   margin: 0 auto;
   background: #FFFFFF;
@@ -1128,9 +1094,9 @@ button:disabled {
   border-radius: 4px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   font-family: 'Cairo', 'Inter', monospace;
+  transition: width 0.3s ease;
 }
 
-/* Price Editor List Row */
 .price-editor-row {
   display: flex;
   align-items: center;
@@ -1156,7 +1122,6 @@ button:disabled {
   direction: ltr;
 }
 
-/* Operations Guide Steps */
 .guide-step-card {
   background: var(--bg-input);
   border: 1px solid var(--border-subtle);
@@ -1177,9 +1142,6 @@ button:disabled {
   line-height: 1.6;
 }
 
-/* ==========================================================================
-   TOAST NOTIFICATION SYSTEM (Replaces all native browser alert() calls)
-   ========================================================================== */
 .toast-container {
   position: fixed;
   bottom: 1.25rem;
@@ -1225,7 +1187,7 @@ button:disabled {
 }
 
 /* ==========================================================================
-   MODULE 4: AL-AMEEN STYLE THERMAL PRINTING & CSS VARIABLES
+   MODULE 4: PROFESSIONAL THERMAL PRINTING & CSS VARIABLES
    ========================================================================== */
 :root {
   --print-paper-width: 58mm;
@@ -1245,10 +1207,29 @@ button:disabled {
   color: #000000;
   background: #FFFFFF;
   font-family: 'Cairo', 'Inter', sans-serif;
-  font-size: 11px;
-  line-height: 1.3;
+  font-size: 13px;
+  line-height: 1.4;
   text-align: center;
   box-sizing: border-box;
+}
+
+/* Logo Styling inside Receipt */
+.receipt-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #000;
+}
+
+.receipt-logo-img {
+  width: 45mm;
+  max-width: 90%;
+  height: auto;
+  display: block;
+  /* Make the logo look excellent on B&W Thermal */
+  filter: grayscale(100%) contrast(1.5) brightness(0.9);
 }
 
 .receipt-header {
@@ -1259,45 +1240,47 @@ button:disabled {
 }
 
 .receipt-brand-ar {
-  font-size: 16px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .receipt-brand-tr {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .receipt-meta {
-  font-size: 11px;
-  margin-bottom: 6px;
-  border-bottom: 1px dashed #000;
+  font-size: 13px;
+  margin-bottom: 8px;
+  border-bottom: 2px solid #000;
   padding-bottom: 6px;
 }
 
 .receipt-meta-row {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 2px;
 }
 
 .receipt-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 8px;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .receipt-table th {
-  border-bottom: 1.5px solid #000;
-  padding: 3px 2px;
+  border-bottom: 2px solid #000;
+  padding: 4px 2px;
   text-align: right;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .receipt-table td {
-  padding: 4px 2px;
-  border-bottom: 1px dotted #555;
+  padding: 6px 2px;
+  border-bottom: 1px dotted #666;
   vertical-align: top;
 }
 
@@ -1310,21 +1293,22 @@ button:disabled {
 }
 
 .receipt-total-block {
-  border-top: 2px solid #000;
+  border-top: 2px dashed #000;
   padding-top: 6px;
   margin-top: 4px;
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
-  font-weight: 800;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 900;
 }
 
 .receipt-footer {
   text-align: center;
-  margin-top: 8px;
-  padding-top: 6px;
-  border-top: 1px dashed #000;
-  font-size: 10px;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 2px solid #000;
+  font-size: 12px;
 }
 
 /* 
@@ -1353,7 +1337,8 @@ button:disabled {
   .modal-backdrop,
   .toast-container,
   button,
-  nav {
+  nav,
+  .print-controls {
     display: none !important;
   }
 
