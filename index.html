@@ -6,7 +6,7 @@
   <title>Falafel Al-Damashqi POS | نظام نقاط البيع السحابي - فلافل الدمشقي</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -31,6 +31,11 @@
       --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
       --font-sans: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      
+      /* متغيرات الطباعة الحرارية */
+      --print-paper-width: 58mm;
+      --print-content-width: 48mm;
+      --print-offset-x: 0mm;
     }
 
     * {
@@ -605,15 +610,18 @@
     .modal-body { padding: 1.15rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
     .modal-footer { padding: 0.85rem 1.15rem; border-top: 1px solid var(--border-subtle); display: flex; gap: 0.65rem; justify-content: flex-end; }
 
+    /* معاينة الفيش الحراري */
     .thermal-paper-preview {
-      width: 80mm;
+      width: var(--print-paper-width, 58mm);
       max-width: 100%;
       margin: 0 auto;
       background: #FFFFFF;
       color: #000000;
       padding: 4mm;
       border-radius: 4px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
       font-family: 'Cairo', 'Inter', monospace;
+      transition: width 0.3s ease;
     }
 
     .price-editor-row {
@@ -669,25 +677,82 @@
     .toast-item.toast-success { border-right-color: var(--success); }
     .toast-item.toast-danger { border-right-color: var(--danger); }
 
+    /* =========================================================
+       تنسيقات الطباعة الحرارية الاحترافية (تشبه نظام الأمين)
+       ========================================================= */
     #print-section { display: none; }
-    .receipt-wrapper { width: 100%; color: #000; background: #FFF; font-family: 'Cairo', 'Inter', sans-serif; font-size: 12px; line-height: 1.35; }
-    .receipt-header { text-align: center; border-bottom: 2px dashed #000; padding-bottom: 6px; margin-bottom: 6px; }
-    .receipt-brand-ar { font-size: 16px; font-weight: 800; }
-    .receipt-brand-tr { font-size: 13px; font-weight: 700; font-family: 'Inter', sans-serif; }
-    .receipt-meta { font-size: 11px; margin-bottom: 6px; border-bottom: 1px dashed #000; padding-bottom: 6px; }
-    .receipt-meta-row { display: flex; justify-content: space-between; }
-    .receipt-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; }
-    .receipt-table th { border-bottom: 1.5px solid #000; padding: 3px 2px; text-align: right; font-weight: 800; }
-    .receipt-table td { padding: 4px 2px; border-bottom: 1px dotted #555; vertical-align: top; }
-    .receipt-table th.num-col, .receipt-table td.num-col { text-align: left; direction: ltr; font-family: 'Inter', monospace; white-space: nowrap; }
-    .receipt-total-block { border-top: 2px solid #000; padding-top: 6px; margin-top: 4px; display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; }
-    .receipt-footer { text-align: center; margin-top: 8px; padding-top: 6px; border-top: 1px dashed #000; font-size: 10px; }
+    
+    .receipt-wrapper { 
+      width: var(--print-content-width); 
+      max-width: 100%; 
+      margin: 0 auto; 
+      transform: translateX(var(--print-offset-x)); 
+      color: #000; 
+      background: #FFF; 
+      font-family: 'Cairo', 'Inter', sans-serif; 
+      font-size: 13px; 
+      line-height: 1.4; 
+      text-align: center; 
+      box-sizing: border-box; 
+    }
 
+    /* تنسيق اللوجو */
+    .receipt-logo-wrap { 
+      display: flex; justify-content: center; align-items: center; 
+      margin-bottom: 8px; padding-bottom: 8px; border-bottom: 2px solid #000; 
+    }
+    .receipt-logo-img { 
+      width: 45mm; max-width: 90%; height: auto; display: block; 
+      filter: grayscale(100%) contrast(1.5) brightness(0.9); 
+    }
+
+    .receipt-header { text-align: center; border-bottom: 2px dashed #000; padding-bottom: 6px; margin-bottom: 6px; }
+    .receipt-brand-ar { font-size: 20px; font-weight: 900; }
+    .receipt-brand-tr { font-size: 14px; font-weight: 800; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; }
+    
+    .receipt-meta { font-size: 13px; margin-bottom: 8px; border-bottom: 2px solid #000; padding-bottom: 6px; }
+    .receipt-meta-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
+    
+    .receipt-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 13px; }
+    .receipt-table th { border-bottom: 2px solid #000; padding: 4px 2px; text-align: right; font-weight: 900; }
+    .receipt-table td { padding: 6px 2px; border-bottom: 1px dotted #666; vertical-align: top; }
+    .receipt-table th.num-col, .receipt-table td.num-col { text-align: left; direction: ltr; font-family: 'Inter', monospace; white-space: nowrap; }
+    
+    .receipt-total-block { border-top: 2px dashed #000; padding-top: 6px; margin-top: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: 900; }
+    .receipt-footer { text-align: center; margin-top: 12px; padding-top: 8px; border-top: 2px solid #000; font-size: 12px; }
+
+    /* منع المتصفح من تغيير الحجم أثناء الطباعة */
     @media print {
-      @page { size: 80mm auto; margin: 0; }
-      html, body { width: 80mm !important; margin: 0 !important; padding: 0 !important; background: #FFF !important; color: #000 !important; }
-      .app-header, .app-container, .modal-backdrop, .toast-container, button, nav { display: none !important; }
-      #print-section { display: block !important; width: 80mm !important; margin: 0 !important; padding: 2mm 3mm !important; background: #FFF !important; color: #000 !important; }
+      @page { margin: 0 !important; }
+      html, body { 
+        width: var(--print-paper-width) !important; 
+        max-width: var(--print-paper-width) !important; 
+        margin: 0 auto !important; 
+        padding: 0 !important; 
+        background: #FFF !important; 
+        color: #000 !important; 
+        overflow: hidden !important; 
+      }
+      .app-header, .app-container, .modal-backdrop, .toast-container, button, nav, .print-controls { 
+        display: none !important; 
+      }
+      #print-section { 
+        display: flex !important; 
+        flex-direction: column !important; 
+        align-items: center !important; 
+        width: var(--print-paper-width) !important; 
+        max-width: var(--print-paper-width) !important; 
+        margin: 0 auto !important; 
+        padding: 2mm 0mm !important; 
+        background: #FFF !important; 
+        color: #000 !important; 
+        box-sizing: border-box !important; 
+      }
+      #print-section .receipt-wrapper { 
+        width: var(--print-content-width) !important; 
+        margin: 0 auto !important; 
+        transform: translateX(var(--print-offset-x)) !important; 
+      }
     }
   </style>
 </head>
@@ -854,7 +919,7 @@
 
         <div class="cashier-action-buttons">
           <button type="button" class="btn-secondary" onclick="syncNowFromCloud(true)">🔄 تحديث من السحابة الآن</button>
-          <button type="button" class="btn-gold" onclick="openZReportModal()">📊 تقرير المبيعات (يومي / أسبوعي / شهري)</button>
+          <button type="button" class="btn-gold" onclick="openZReportModal()">📊 تقرير الإغلاق (Z-Report)</button>
         </div>
       </div>
 
@@ -887,19 +952,36 @@
 
   </main>
 
-  <!-- نافذة الطباعة الحرارية والتقارير -->
+  <!-- نافذة الطباعة الحرارية (التي تم تعديلها لتشمل الإعدادات والإزاحة) -->
   <div id="receipt-modal-backdrop" class="modal-backdrop">
     <div class="modal-dialog">
       <div class="modal-header">
-        <h3 id="receipt-modal-title">🖨️ معاينة الطباعة الحرارية (80mm)</h3>
+        <h3 id="receipt-modal-title">🖨️ معاينة الفيش</h3>
         <button type="button" class="btn-secondary" onclick="closeReceiptModal()">✕</button>
       </div>
       <div class="modal-body">
         <div id="modal-thermal-preview" class="thermal-paper-preview"></div>
+        
+        <!-- لوحة التحكم في مقاس وإزاحة الفيش -->
+        <div class="print-controls" style="margin-top: 1rem; padding: 1rem; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+          <h4 style="color: var(--accent-gold); margin-bottom: 0.75rem; font-size: 0.95rem;">⚙️ إعدادات وتوسيط الطباعة</h4>
+          
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <button id="btn-size-58" class="btn-gold" onclick="setThermalPaperSize('58')" style="flex: 1;">مقاس 58mm</button>
+            <button id="btn-size-80" class="btn-secondary" onclick="setThermalPaperSize('80')" style="flex: 1;">مقاس 80mm</button>
+          </div>
+
+          <label style="font-size: 0.85rem; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+            ↔️ إزاحة الفيش (يمين/يسار): <strong id="print-offset-label" style="color: var(--accent-gold);">0mm</strong>
+          </label>
+          <input type="range" min="-20" max="20" step="1" value="0" oninput="setThermalOffset(this.value)" style="width: 100%; cursor: pointer; accent-color: var(--accent-gold);">
+          <small style="color: var(--text-muted); font-size: 0.7rem; display: block; margin-top: 0.25rem;">اسحب الشريط لتوسيط الفيش على الورقة الحرارية بدقة.</small>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-secondary" onclick="closeReceiptModal()">إغلاق</button>
-        <button type="button" class="btn-gold" onclick="window.print()">🖨️ طباعة الآن (80mm)</button>
+        <button type="button" class="btn-gold" onclick="triggerBrowserPrint()">🖨️ طباعة الآن</button>
       </div>
     </div>
   </div>
@@ -1389,7 +1471,6 @@
       grandTotalEl.textContent = `${calculateCartTotal()} ₺`;
     }
 
-    // إرسال الطلب مباشرة إلى سحابة Firebase برقم فريد لا يتكرر أبداً
     async function submitWaiterOrder() {
       if (state.cart.length === 0) {
         showToast('السلة فارغة! أضف أصنافاً أولاً', 'danger');
@@ -1405,7 +1486,6 @@
       if (submitBtn) submitBtn.disabled = true;
 
       const now = new Date();
-      // توليد رقم طلب فريد (مثال: ORD-4829) لمنع أي تعارض بين الهواتف والحاسوب
       const uniqueNum = String(Date.now()).slice(-4);
       const orderId = `ORD-${uniqueNum}`;
 
@@ -1427,7 +1507,6 @@
       };
 
       try {
-        // إرسال مباشر إلى Firebase Realtime Database
         const res = await fetch(`${FIREBASE_DB_URL}/orders/${orderId}.json`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -1452,7 +1531,6 @@
       }
     }
 
-    // مزامنة مستمرة وفورية من السحابة إلى شاشة الكاشير
     async function syncNowFromCloud(manualTrigger = false) {
       try {
         const res = await fetch(`${FIREBASE_DB_URL}/orders.json?t=${Date.now()}`, {
@@ -1580,7 +1658,7 @@
             <button type="button" class="btn-card-action btn-print" onclick="printReceiptById('${order.id}')">🖨️ الفيش</button>
           `;
         } else {
-          btns = `<button type="button" class="btn-card-action btn-print" onclick="printReceiptById('${order.id}')">🖨️ طباعة الفيش (80mm)</button>`;
+          btns = `<button type="button" class="btn-card-action btn-print" onclick="printReceiptById('${order.id}')">🖨️ طباعة الفيش</button>`;
         }
 
         card.innerHTML = `
@@ -1602,6 +1680,9 @@
       });
     }
 
+    // ==========================================
+    // دالة إنشاء الفيش الحراري بتصميم احترافي
+    // ==========================================
     function printReceiptById(orderId) {
       const order = state.orders.find((o) => o.id === orderId);
       if (!order) return;
@@ -1612,35 +1693,60 @@
         total += line;
         return `
           <tr>
-            <td class="num-col" style="text-align:center;font-weight:700;">${item.qty}</td>
-            <td><div style="font-weight:700;">${escapeHtml(item.nameAr)}</div><div style="font-size:10px;">${escapeHtml(item.nameTr)}</div></td>
+            <td class="num-col" style="text-align:center;font-weight:900;">${item.qty}</td>
+            <td>
+              <div style="font-weight:900; font-size: 14px;">${escapeHtml(item.nameAr)}</div>
+              <div style="font-size:11px; color:#444;">${escapeHtml(item.nameTr)}</div>
+            </td>
             <td class="num-col">${Number(item.price).toFixed(2)}</td>
-            <td class="num-col" style="font-weight:700;">${line.toFixed(2)}</td>
+            <td class="num-col" style="font-weight:900; font-size: 14px;">${line.toFixed(2)}</td>
           </tr>
         `;
       }).join('');
 
       const html = `
         <div class="receipt-wrapper">
+          <div class="receipt-logo-wrap">
+            <img src="Falafel aldmşke.png" alt="Logo" class="receipt-logo-img">
+          </div>
           <div class="receipt-header">
             <div class="receipt-brand-ar">مطعم فلافل الدمشقي</div>
             <div class="receipt-brand-tr">FALAFEL ALDMŞKE RESTORAN</div>
-            <div style="font-size:10px;" class="ltr-text">Tel: 0554 142 22 20 | 0539 522 63 88</div>
+            <div style="font-size:11px; margin-top:4px;" class="ltr-text">Tel: 0554 142 22 20 | 0539 522 63 88</div>
           </div>
           <div class="receipt-meta">
-            <div class="receipt-meta-row"><span>رقم الفاتورة:</span><strong class="ltr-text">#${escapeHtml(order.id)}</strong></div>
-            <div class="receipt-meta-row"><span>الطاولة:</span><strong>${escapeHtml(order.table)}</strong></div>
-            <div class="receipt-meta-row"><span>التاريخ:</span><span class="ltr-text">${order.dateISO || ''} ${escapeHtml(order.createdAt)}</span></div>
+            <div class="receipt-meta-row">
+              <span>رقم الفاتورة / Fiş No:</span>
+              <strong class="ltr-text" style="font-size: 15px;">#${escapeHtml(order.id)}</strong>
+            </div>
+            <div class="receipt-meta-row">
+              <span>الطاولة / Masa:</span>
+              <strong style="font-size: 15px;">${escapeHtml(order.table)}</strong>
+            </div>
+            <div class="receipt-meta-row">
+              <span>التاريخ / Tarih:</span>
+              <span class="ltr-text">${order.dateISO || ''} ${escapeHtml(order.createdAt)}</span>
+            </div>
           </div>
           <table class="receipt-table">
-            <thead><tr><th>الكمية</th><th>الصنف</th><th>السعر</th><th>المجموع</th></tr></thead>
+            <thead>
+              <tr>
+                <th style="width:15%; text-align:center;">الكمية<br>Qty</th>
+                <th style="width:50%;">الصنف<br>Ürün</th>
+                <th style="width:15%;">السعر<br>Fiyat</th>
+                <th style="width:20%;">المجموع<br>Tutar</th>
+              </tr>
+            </thead>
             <tbody>${rows}</tbody>
           </table>
           <div class="receipt-total-block">
-            <span>الإجمالي / TOPLAM:</span>
-            <span class="ltr-text">${total.toFixed(2)} TL</span>
+            <span>المطلوب دفعه / TOPLAM:</span>
+            <span class="ltr-text" style="font-size: 18px;">${total.toFixed(2)} TL</span>
           </div>
-          <div class="receipt-footer">شكراً لزيارتكم • Afiyet Olsun</div>
+          <div class="receipt-footer">
+             <div style="font-size: 13px; font-weight: 900; margin-bottom: 3px;">شكراً لزيارتكم - صحتين وعافية</div>
+             <div>Afiyet Olsun • Yine Bekleriz</div>
+          </div>
         </div>
       `;
 
@@ -1679,30 +1785,48 @@
 
       const rows = Array.from(map.values()).sort((a, b) => b.qty - a.qty).map((it) => `
         <tr>
-          <td class="num-col" style="text-align:center;font-weight:700;">${it.qty}</td>
-          <td style="font-weight:700;">${escapeHtml(it.nameAr)}</td>
-          <td class="num-col" style="font-weight:700;">${it.rev.toFixed(2)} TL</td>
+          <td class="num-col" style="text-align:center;font-weight:900;">${it.qty}</td>
+          <td style="font-weight:900;">${escapeHtml(it.nameAr)}</td>
+          <td class="num-col" style="font-weight:900;">${it.rev.toFixed(2)} TL</td>
         </tr>
       `).join('');
 
       const html = `
         <div class="receipt-wrapper">
+          <div class="receipt-logo-wrap">
+            <img src="Falafel aldmşke.png" alt="Logo" class="receipt-logo-img">
+          </div>
           <div class="receipt-header">
-            <div class="receipt-brand-ar">تقرير المبيعات السحابي الشامل</div>
+            <div class="receipt-brand-ar" style="font-size: 18px;">تقرير الإغلاق (Z-REPORT)</div>
             <div class="receipt-brand-tr">FALAFEL ALDMŞKE • Z-REPORT</div>
           </div>
           <div class="receipt-meta">
-            <div class="receipt-meta-row"><span>اليوم (24 ساعة):</span><strong class="ltr-text">${dayCnt} طلب | ${dayRev.toFixed(2)} TL</strong></div>
-            <div class="receipt-meta-row"><span>الأسبوع (7 أيام):</span><strong class="ltr-text">${weekCnt} طلب | ${weekRev.toFixed(2)} TL</strong></div>
-            <div class="receipt-meta-row"><span>الشهر (30 يوماً):</span><strong class="ltr-text">${monthCnt} طلب | ${monthRev.toFixed(2)} TL</strong></div>
+            <div class="receipt-meta-row">
+              <span>اليوم (24 ساعة):</span>
+              <strong class="ltr-text">${dayCnt} طلب | ${dayRev.toFixed(2)} TL</strong>
+            </div>
+            <div class="receipt-meta-row">
+              <span>الأسبوع (7 أيام):</span>
+              <strong class="ltr-text">${weekCnt} طلب | ${weekRev.toFixed(2)} TL</strong>
+            </div>
+            <div class="receipt-meta-row">
+              <span>الشهر (30 يوماً):</span>
+              <strong class="ltr-text">${monthCnt} طلب | ${monthRev.toFixed(2)} TL</strong>
+            </div>
           </div>
           <table class="receipt-table">
-            <thead><tr><th>الكمية</th><th>الصنف</th><th>الإجمالي</th></tr></thead>
-            <tbody>${rows || '<tr><td colspan="3">لا توجد مبيعات مكتملة</td></tr>'}</tbody>
+            <thead>
+              <tr>
+                <th style="text-align:center;">الكمية</th>
+                <th>الصنف</th>
+                <th>الإجمالي</th>
+              </tr>
+            </thead>
+            <tbody>${rows || '<tr><td colspan="3" style="text-align:center;">لا توجد مبيعات مكتملة</td></tr>'}</tbody>
           </table>
           <div class="receipt-total-block">
             <span>إجمالي المبيعات الكلي:</span>
-            <span class="ltr-text">${totalRev.toFixed(2)} TL</span>
+            <span class="ltr-text" style="font-size: 18px;">${totalRev.toFixed(2)} TL</span>
           </div>
         </div>
       `;
@@ -1748,6 +1872,57 @@
 
     function escapeHtml(str) {
       return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // ==========================================
+    // دوال التحكم بالطباعة (المقاس والتوسيط)
+    // ==========================================
+    function setThermalPaperSize(sizeMm) {
+      const root = document.documentElement;
+      const preview = document.getElementById('modal-thermal-preview');
+      const btn58 = document.getElementById('btn-size-58');
+      const btn80 = document.getElementById('btn-size-80');
+
+      if (sizeMm === '80') {
+        root.style.setProperty('--print-paper-width', '80mm');
+        root.style.setProperty('--print-content-width', '72mm');
+        if (btn80) btn80.className = 'btn-gold';
+        if (btn58) btn58.className = 'btn-secondary';
+        showToast('تم ضبط المقاس لورق 80mm', 'gold');
+      } else {
+        root.style.setProperty('--print-paper-width', '58mm');
+        root.style.setProperty('--print-content-width', '48mm');
+        if (btn58) btn58.className = 'btn-gold';
+        if (btn80) btn80.className = 'btn-secondary';
+        showToast('تم ضبط المقاس لورق 58mm', 'success');
+      }
+
+      let pageStyle = document.getElementById('dynamic-print-page-style');
+      if (!pageStyle) {
+        pageStyle = document.createElement('style');
+        pageStyle.id = 'dynamic-print-page-style';
+        document.head.appendChild(pageStyle);
+      }
+      
+      pageStyle.innerHTML = `
+        @media print {
+          @page {
+            size: ${sizeMm}mm auto !important;
+            margin: 0 !important; 
+          }
+        }
+      `;
+    }
+
+    function setThermalOffset(offsetMm) {
+      const val = Number(offsetMm) || 0;
+      document.documentElement.style.setProperty('--print-offset-x', `${val}mm`);
+      const lbl = document.getElementById('print-offset-label');
+      if (lbl) lbl.textContent = `${val > 0 ? '+' : ''}${val}mm`;
+    }
+
+    function triggerBrowserPrint() {
+      window.print();
     }
 
     function initPosApp() {
