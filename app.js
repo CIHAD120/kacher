@@ -1393,6 +1393,7 @@ function setThermalPaperSize(sizeMm) {
   const btn58 = document.getElementById('btn-size-58');
   const btn80 = document.getElementById('btn-size-80');
 
+  // 1. تحديث متغيرات CSS لتنسيق عرض المتصفح
   if (sizeMm === '80') {
     root.style.setProperty('--print-paper-width', '80mm');
     root.style.setProperty('--print-content-width', '72mm');
@@ -1408,11 +1409,21 @@ function setThermalPaperSize(sizeMm) {
     if (btn80) btn80.className = 'btn-secondary';
     showToast('تم ضبط المقاس على POS-58 (58mm في المنتصف)', 'success');
   }
-}
 
-function setThermalOffset(offsetMm) {
-  const val = Number(offsetMm) || 0;
-  document.documentElement.style.setProperty('--print-offset-x', `${val}mm`);
-  const lbl = document.getElementById('print-offset-label');
-  if (lbl) lbl.textContent = `${val > 0 ? '+' : ''}${val}mm`;
+  // 2. حقن كود @page ديناميكياً لإجبار المتصفح على التوسيط
+  let pageStyle = document.getElementById('dynamic-print-page-style');
+  if (!pageStyle) {
+    pageStyle = document.createElement('style');
+    pageStyle.id = 'dynamic-print-page-style';
+    document.head.appendChild(pageStyle);
+  }
+  
+  pageStyle.innerHTML = `
+    @media print {
+      @page {
+        size: ${sizeMm}mm auto !important;
+        margin: 0 !important; 
+      }
+    }
+  `;
 }
