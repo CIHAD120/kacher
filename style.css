@@ -212,83 +212,6 @@ button:disabled {
   text-align: center;
 }
 
-:root {
-  --print-paper-width: 58mm;
-  --print-content-width: 48mm;
-  --print-offset-x: 0mm;
-}
-
-.receipt-wrapper {
-  width: var(--print-content-width);
-  max-width: 100%;
-  margin: 0 auto;
-  transform: translateX(var(--print-offset-x));
-  color: #000000;
-  background: #FFFFFF;
-  font-family: 'Cairo', 'Inter', sans-serif;
-  font-size: 11px;
-  line-height: 1.3;
-  text-align: center;
-  box-sizing: border-box;
-}
-
-.receipt-logo-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto 3px auto;
-}
-
-.receipt-logo-img {
-  width: 24mm;
-  max-width: 90px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  filter: contrast(1.35) grayscale(100%);
-}
-
-@media print {
-  @page {
-    size: 58mm auto;
-    margin: 0mm !important;
-  }
-
-  html, body {
-    width: var(--print-paper-width) !important;
-    max-width: var(--print-paper-width) !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    background: #FFFFFF !important;
-    color: #000000 !important;
-    overflow: visible !important;
-    text-align: center !important;
-  }
-
-  .app-header, .app-container, .modal-backdrop, .toast-container, button, nav {
-    display: none !important;
-  }
-
-  #print-section {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    width: var(--print-paper-width) !important;
-    max-width: var(--print-paper-width) !important;
-    margin: 0 auto !important;
-    padding: 1mm 0mm !important;
-    background: #FFFFFF !important;
-    color: #000000 !important;
-    box-sizing: border-box !important;
-  }
-
-  #print-section .receipt-wrapper {
-    width: var(--print-content-width) !important;
-    margin: 0 auto !important;
-    transform: translateX(var(--print-offset-x)) !important;
-  }
-}
 /* Audio Status / Cashier Login Unlock Button */
 .btn-audio-unlock {
   background: var(--bg-card);
@@ -1302,19 +1225,30 @@ button:disabled {
 }
 
 /* ==========================================================================
-   MODULE 4: AL-AMEEN STYLE THERMAL PRINTING & STRICT @media print CSS
+   MODULE 4: AL-AMEEN STYLE THERMAL PRINTING & CSS VARIABLES
    ========================================================================== */
+:root {
+  --print-paper-width: 58mm;
+  --print-content-width: 48mm;
+  --print-offset-x: 0mm;
+}
+
 #print-section {
   display: none;
 }
 
 .receipt-wrapper {
-  width: 100%;
+  width: var(--print-content-width);
+  max-width: 100%;
+  margin: 0 auto;
+  transform: translateX(var(--print-offset-x));
   color: #000000;
   background: #FFFFFF;
   font-family: 'Cairo', 'Inter', sans-serif;
-  font-size: 12px;
-  line-height: 1.35;
+  font-size: 11px;
+  line-height: 1.3;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .receipt-header {
@@ -1393,23 +1327,27 @@ button:disabled {
   font-size: 10px;
 }
 
-/* STRICT 80MM THERMAL PRINT MEDIA QUERY */
+/* 
+  PRINT MEDIA QUERY
+  Uses CSS Variables to dynamically switch between 58mm and 80mm. 
+  The actual @page rule is injected dynamically via JS for precision.
+*/
 @media print {
   @page {
-    size: 80mm auto;
-    margin: 0;
+    margin: 0 !important;
   }
 
   html, body {
-    width: 80mm !important;
-    margin: 0 !important;
+    width: var(--print-paper-width) !important;
+    max-width: var(--print-paper-width) !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     background: #FFFFFF !important;
     color: #000000 !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
-  /* Hide all UI chrome, buttons, navbars, modals, and toasts */
+  /* Hide all UI chrome */
   .app-header,
   .app-container,
   .modal-backdrop,
@@ -1419,13 +1357,23 @@ button:disabled {
     display: none !important;
   }
 
-  /* Force #print-section to 80mm thermal paper width */
+  /* Dynamic print section sizing */
   #print-section {
-    display: block !important;
-    width: 80mm !important;
-    margin: 0 !important;
-    padding: 2mm 3mm !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: var(--print-paper-width) !important;
+    max-width: var(--print-paper-width) !important;
+    margin: 0 auto !important;
+    padding: 2mm 0mm !important;
     background: #FFFFFF !important;
     color: #000000 !important;
+    box-sizing: border-box !important;
+  }
+
+  #print-section .receipt-wrapper {
+    width: var(--print-content-width) !important;
+    margin: 0 auto !important;
+    transform: translateX(var(--print-offset-x)) !important;
   }
 }
