@@ -54,6 +54,8 @@ html, body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
 }
 
 .ltr-text {
@@ -249,15 +251,15 @@ button:disabled {
 }
 
 .btn-audio-unlock.ringing-active {
-  background: var(--danger);
-  color: #FFF;
-  border-color: #FFF;
-  animation: pulseAlarmBtn 0.8s infinite alternate;
+  background: var(--info-soft);
+  color: #93C5FD;
+  border-color: var(--info);
+  animation: pulseSoftBtn 1.5s infinite alternate;
 }
 
-@keyframes pulseAlarmBtn {
-  from { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-  to { transform: scale(1.05); box-shadow: 0 0 16px 4px rgba(239, 68, 68, 0.6); }
+@keyframes pulseSoftBtn {
+  from { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  to { transform: scale(1.03); box-shadow: 0 0 12px 2px rgba(59, 130, 246, 0.35); }
 }
 
 /* ==========================================================================
@@ -265,8 +267,10 @@ button:disabled {
    ========================================================================== */
 .app-container {
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   padding: 1.25rem;
+  flex: 1;
 }
 
 .spa-view {
@@ -284,7 +288,7 @@ button:disabled {
 }
 
 /* ==========================================================================
-   WAITER UI & ACTIVE TABLE ORDERS ADDITION BAR
+   WAITER UI & ACTIVE TABLE ORDERS ADDITION / DELETE BAR
    ========================================================================== */
 .waiter-top-controls {
   display: flex;
@@ -359,7 +363,6 @@ button:disabled {
   outline: none;
 }
 
-/* شريط الطلبات المفتوحة للطاولات لإضافة أصناف جديدة */
 .active-tables-strip {
   background: var(--bg-input);
   border: 1px solid var(--border-gold);
@@ -393,10 +396,10 @@ button:disabled {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 0.45rem 0.75rem;
+  padding: 0.5rem 0.8rem;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   flex-shrink: 0;
   font-size: 0.82rem;
 }
@@ -411,7 +414,7 @@ button:disabled {
   color: #0F172A;
   font-weight: 800;
   font-size: 0.76rem;
-  padding: 0.3rem 0.65rem;
+  padding: 0.32rem 0.65rem;
   border-radius: 6px;
   display: inline-flex;
   align-items: center;
@@ -423,7 +426,24 @@ button:disabled {
   color: #0F172A;
 }
 
-/* شريط تنبيه وضع الإضافة لطلب قائم */
+.btn-waiter-delete-order {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.32rem 0.6rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn-waiter-delete-order:hover {
+  background: var(--danger);
+  color: #FFF;
+}
+
 .append-mode-banner {
   background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(212, 175, 55, 0.15));
   border: 2px solid var(--success);
@@ -503,8 +523,8 @@ button:disabled {
 
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.85rem;
   align-items: start;
 }
 
@@ -512,11 +532,10 @@ button:disabled {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 0.75rem 0.9rem;
+  padding: 0.85rem 0.95rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 0.65rem;
   box-shadow: var(--shadow-card);
   position: relative;
   height: max-content;
@@ -530,6 +549,14 @@ button:disabled {
 .menu-card.in-cart {
   border-color: var(--accent-gold);
   background: linear-gradient(90deg, rgba(212, 175, 55, 0.08), var(--bg-card));
+}
+
+.menu-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
 }
 
 .menu-card-names {
@@ -559,7 +586,7 @@ button:disabled {
 .menu-card-right {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
   flex-shrink: 0;
 }
 
@@ -609,6 +636,103 @@ button:disabled {
   align-items: center;
   justify-content: center;
   border: 2px solid var(--bg-card);
+}
+
+/* ==========================================================================
+   SANDWICH SIZE OPTIONS (NORMAL / DOUBLE) & ITEM SPECIAL NOTES
+   ========================================================================== */
+.menu-card-options-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+  padding-top: 0.45rem;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.size-selector-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  background: var(--bg-input);
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-size-option {
+  padding: 0.32rem 0.5rem;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.btn-size-option.active {
+  background: var(--accent-gold);
+  color: #0F172A;
+  font-weight: 800;
+}
+
+.item-note-inline-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.item-note-input {
+  flex: 1;
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 0.32rem 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+}
+
+.item-note-input:focus {
+  border-color: var(--accent-gold);
+  outline: none;
+}
+
+.item-size-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.45rem;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  margin-right: 0.35rem;
+}
+
+.item-size-badge.size-double {
+  background: rgba(245, 158, 11, 0.2);
+  color: #FCD34D;
+  border: 1px solid rgba(245, 158, 11, 0.45);
+}
+
+.item-size-badge.size-normal {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93C5FD;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+}
+
+.order-item-note-box {
+  margin-top: 0.2rem;
+  background: rgba(245, 158, 11, 0.14);
+  color: #FDE68A;
+  border-right: 3px solid var(--warning);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.76rem;
+  font-weight: 700;
 }
 
 /* ==========================================================================
@@ -705,6 +829,12 @@ button:disabled {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 0.75rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.cart-item-main-line {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1029,13 +1159,13 @@ button:disabled {
 }
 
 @keyframes newOrderPulse {
-  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.85), 0 0 20px rgba(239, 68, 68, 0.6); border-color: var(--accent-gold); transform: scale(1.01); }
-  50% { box-shadow: 0 0 0 12px rgba(212, 175, 55, 0), 0 0 30px rgba(212, 175, 55, 0.4); border-color: var(--danger); transform: scale(1); }
-  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); border-color: var(--accent-gold); transform: scale(1); }
+  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.55); border-color: var(--accent-gold); }
+  50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); border-color: var(--info); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); border-color: var(--accent-gold); }
 }
 
 .order-card.pulse-new {
-  animation: newOrderPulse 1.4s ease-in-out infinite;
+  animation: newOrderPulse 1.8s ease-in-out infinite;
   border-color: var(--accent-gold);
 }
 
@@ -1087,11 +1217,19 @@ button:disabled {
 .order-items-mini-list {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.45rem;
   font-size: 0.85rem;
 }
 
 .order-item-line {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px dotted rgba(148, 163, 184, 0.12);
+}
+
+.order-item-line-top {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -1172,10 +1310,11 @@ button:disabled {
 .btn-edit-order { background: var(--info-soft); color: #93C5FD; border: 1px solid rgba(59, 130, 246, 0.4); }
 .btn-return-prep { background: var(--warning-soft); color: #FCD34D; border: 1px solid rgba(245, 158, 11, 0.4); }
 .btn-print { background: var(--bg-elevated); color: var(--text-main); border: 1px solid var(--border-subtle); }
-.btn-cancel-order { background: var(--danger-soft); color: var(--danger); flex: 0 0 auto; }
+.btn-cancel-order { background: var(--danger-soft); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.4); flex: 0 0 auto; }
+.btn-cancel-order:hover { background: var(--danger); color: #FFF; }
 
 /* ==========================================================================
-   MODALS & CASHIER ORDER EDITOR
+   MODALS & MENU MANAGER
    ========================================================================== */
 .modal-backdrop {
   position: fixed;
@@ -1204,7 +1343,7 @@ button:disabled {
   overflow: hidden;
 }
 
-.modal-dialog.wide-modal { max-width: 820px; }
+.modal-dialog.wide-modal { max-width: 860px; }
 
 .modal-header {
   padding: 0.9rem 1.15rem;
@@ -1219,7 +1358,6 @@ button:disabled {
 .modal-body { padding: 1.15rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
 .modal-footer { padding: 0.85rem 1.15rem; border-top: 1px solid var(--border-subtle); display: flex; gap: 0.6rem; justify-content: flex-end; flex-wrap: wrap; }
 
-/* أزرار الإضافة السريعة في نافذة الكاشير */
 .quick-addons-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1276,19 +1414,48 @@ button:disabled {
   background: var(--bg-elevated);
 }
 
-.price-editor-row {
+.menu-add-form-box {
+  background: var(--bg-input);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.65rem;
+  align-items: end;
+}
+
+.form-field-col {
   display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-field-col label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.price-editor-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 90px 90px auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.55rem;
   background: var(--bg-input);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 0.55rem 0.85rem;
+  padding: 0.55rem 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .price-editor-row {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .price-editor-input {
-  width: 95px;
+  width: 100%;
   background: var(--bg-card);
   color: var(--accent-gold);
   border: 1px solid var(--border-gold);
@@ -1296,7 +1463,7 @@ button:disabled {
   padding: 0.35rem 0.5rem;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-align: center;
   direction: ltr;
 }
@@ -1341,8 +1508,22 @@ button:disabled {
 }
 
 /* ==========================================================================
+   COPYRIGHT FOOTER (Requirement 7)
+   ========================================================================== */
+.app-footer {
+  margin-top: auto;
+  background: rgba(15, 23, 42, 0.96);
+  border-top: 1px solid var(--border-gold);
+  padding: 0.9rem 1.25rem;
+  text-align: center;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  letter-spacing: 0.01em;
+}
+
+/* ==========================================================================
    MODULE 4: ZJIANG POS-58 (58mm) THERMAL RECEIPT ENGINE
-   مُصمم خصيصاً لعرض رأس الطباعة الفعلي 46mm-48mm لمنع انقسام الفيش نهائياً
    ========================================================================== */
 #print-section { display: none; }
 
@@ -1372,6 +1553,23 @@ button:disabled {
   text-align: center;
   box-sizing: border-box;
   direction: rtl;
+}
+
+.receipt-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid #000;
+}
+
+.receipt-logo-img {
+  width: 36mm;
+  max-width: 85%;
+  height: auto;
+  display: block;
+  filter: grayscale(100%) contrast(1.5) brightness(0.9);
 }
 
 .receipt-header {
@@ -1524,6 +1722,7 @@ button:disabled {
 
   .app-header,
   .app-container,
+  .app-footer,
   .modal-backdrop,
   .toast-container,
   button,
