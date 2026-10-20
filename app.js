@@ -1,117 +1,155 @@
 /**
  * ============================================================================
- * MODULE 1: THE COMPLETE MENU DATA (65 Items)
+ * MODULE 1: THE COMPLETE MENU DATA (Updated 100% from Menu Photos + Easy Config)
+ * يدعم خيارات الحجم (عادي Normal / دبل Double) وإدارة الأصناف بسهولة تامة
  * ============================================================================
  */
 const FIREBASE_DB_URL = 'https://pos-kasher-default-rtdb.firebaseio.com';
 
 const defaultMenuData = [
-  // 1. سندويش فلافل (Falafel Dürüm) — 5 Items
-  { category: 'سندويش فلافل', nameAr: 'فلافل لف', nameTr: 'Falafel Dürüm', price: 110 },
-  { category: 'سندويش فلافل', nameAr: 'فلافل دبل', nameTr: 'Falafel extra Dürüm', price: 125 },
-  { category: 'سندويش فلافل', nameAr: 'فلافل مع فول', nameTr: 'Falafel ve Bakla Dürüm', price: 125 },
-  { category: 'سندويش فلافل', nameAr: 'فلافل مع بطاطا', nameTr: 'Falafel ve Patates Dürüm', price: 125 },
-  { category: 'سندويش فلافل', nameAr: 'فلافل عربي مع بطاطا', nameTr: 'Falafel ve Patates Dürüm (Arap)', price: 185 },
+  // 1. سندويش فلافل (Falafel Dürüm) — يدعم خيار عادي / دبل
+  { category: 'سندويش فلافل', nameAr: 'فلافل لف', nameTr: 'Falafel Dürüm', price: 110, hasSizeOption: true, doublePrice: 125 },
+  { category: 'سندويش فلافل', nameAr: 'فلافل دبل', nameTr: 'Duble Falafel Dürüm', price: 125, hasSizeOption: true, doublePrice: 145 },
+  { category: 'سندويش فلافل', nameAr: 'فلافل مع فول', nameTr: 'Baklalı Falafel Dürüm', price: 125, hasSizeOption: true, doublePrice: 145 },
+  { category: 'سندويش فلافل', nameAr: 'فلافل مع بطاطا', nameTr: 'Patatesli Falafel Dürüm', price: 125, hasSizeOption: true, doublePrice: 145 },
+  { category: 'سندويش فلافل', nameAr: 'فلافل عربي مع بطاطا', nameTr: 'Patatesli Falafel Dürüm (Arap)', price: 185, hasSizeOption: true, doublePrice: 220 },
 
-  // 2. شاميات (Şamiyat) — 18 Items
-  { category: 'شاميات', nameAr: 'فول بطحينة', nameTr: 'Tahinli yoğurtlu koru bakla', price: 155 },
-  { category: 'شاميات', nameAr: 'فول مدمس بزيت', nameTr: 'Zeytin yoğurtlu koru bakla', price: 155 },
-  { category: 'شاميات', nameAr: 'فول بطحينة مهروس', nameTr: 'Tahinli koru bakla ezmesi', price: 155 },
-  { category: 'شاميات', nameAr: 'فول بزيت مهروس', nameTr: 'Zeytin yağlı koru bakla ezmesi', price: 155 },
-  { category: 'شاميات', nameAr: 'حمص حب طحينة', nameTr: 'Tahinli nohut', price: 155 },
-  { category: 'شاميات', nameAr: 'حمص حب بزيت', nameTr: 'Zeytin yağlı nohut', price: 155 },
-  { category: 'شاميات', nameAr: 'حمص بطحينة (مسبحة)', nameTr: 'Humus', price: 150 },
-  { category: 'شاميات', nameAr: 'فتة بزيت بلدي', nameTr: 'Sıvıyağlı fatte', price: 170 },
-  { category: 'شاميات', nameAr: 'فتة بسمنة', nameTr: 'Tereyağlı fatte', price: 170 },
-  { category: 'شاميات', nameAr: 'فتة بزيت فقسة', nameTr: 'Zeytinyağlı fatte (فقسة)', price: 170 },
-  { category: 'شاميات', nameAr: 'فته بالكاجو', nameTr: 'Kajulu fatte', price: 260 },
-  { category: 'شاميات', nameAr: 'فتة باللحمة', nameTr: 'Kıymalı fatte', price: 285 },
-  { category: 'شاميات', nameAr: 'مسبحة بيروتية', nameTr: 'Humus (tahinli nohut ezmesi)', price: 155 },
-  { category: 'شاميات', nameAr: 'مسبحة باللحمة', nameTr: 'Kıymalı homus', price: 265 },
-  { category: 'شاميات', nameAr: 'مسبحة بالكاجو', nameTr: 'Kajulu nuhut', price: 250 },
-  { category: 'شاميات', nameAr: 'متبل باذنجان', nameTr: 'Tahinli yoğurtlu patlıcan', price: 150 },
-  { category: 'شاميات', nameAr: 'فلافل 6 قرص', nameTr: '6 adet Falafel', price: 120 },
-  { category: 'شاميات', nameAr: 'فلافل 10 قرص', nameTr: '10 adet Falafel', price: 150 },
+  // 2. شاميات (Şam Mutfağı)
+  { category: 'شاميات', nameAr: 'فول بطحينة', nameTr: 'Tahinli Bakla', price: 155, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فول مدمس بزيت', nameTr: 'Zeytinyağlı Bakla', price: 155, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فول بطحينة مهروس', nameTr: 'Tahinli Bakla Ezmesi', price: 155, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فول بزيت مهروس', nameTr: 'Zeytinyağlı Bakla Ezmesi', price: 155, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'حمص حب بطحينة', nameTr: 'Tahinli Nohut', price: 155, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'حمص حب بزيت', nameTr: 'Zeytinyağlı Nohut', price: 155, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'حمص بطحينة (مسبحة)', nameTr: 'Tahinli Humus', price: 150, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فتة بزيت بلدي', nameTr: 'Zeytinyağlı Fette', price: 170, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فتة بسمنة', nameTr: 'Tereyağlı Fette', price: 170, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فتة بزيت فقسة', nameTr: 'Zeytinyağlı Fette (فقسة)', price: 170, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فتة بالكاجو', nameTr: 'Kajulu Fette', price: 260, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فتة باللحمة', nameTr: 'Etli Fette', price: 285, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'مسبحة بيروتية', nameTr: 'Beyrut Usulü Müsebbaha', price: 155, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'مسبحة باللحمة', nameTr: 'Beyrut Usulü Humus', price: 265, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'مسبحة بالكاجو', nameTr: 'Kajulu Humus', price: 260, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'متبل باذنجان', nameTr: 'Tahinli Yoğurtlu Patlıcan', price: 150, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فلافل 6 قرص', nameTr: '6 Adet Falafel', price: 120, hasSizeOption: false },
+  { category: 'شاميات', nameAr: 'فلافل 10 قرص', nameTr: '10 Adet Falafel', price: 150, hasSizeOption: false },
 
-  // 3. غربي - وجبة — 9 Items
-  { category: 'غربي - وجبة', nameAr: 'كريسبي وجبة', nameTr: 'Acılı çıtır tavuk Porsiyon', price: 250 },
-  { category: 'غربي - وجبة', nameAr: 'سكالوب وجبة', nameTr: 'Galata ünlü çıtır tavuk Porsiyon', price: 250 },
-  { category: 'غربي - وجبة', nameAr: 'زنجر وجبة', nameTr: 'Çıtır tavuk göğsü kızarması Porsiyon', price: 260 },
-  { category: 'غربي - وجبة', nameAr: 'فاهيتا وجبة', nameTr: 'Fajita Porsiyon', price: 260 },
-  { category: 'غربي - وجبة', nameAr: 'فرانشيسكو وجبة', nameTr: 'Mantar kaşarlı sote Porsiyon', price: 260 },
-  { category: 'غربي - وجبة', nameAr: 'مكسيكي وجبة', nameTr: 'Biberli tavuk sote acılı Porsiyon', price: 250 },
-  { category: 'غربي - وجبة', nameAr: 'شيش وجبة', nameTr: 'Tavuk şişi Porsiyon', price: 250 },
-  { category: 'غربي - وجبة', nameAr: 'بطاطا وجبة', nameTr: 'Patates Porsiyon', price: 150 },
-  { category: 'غربي - وجبة', nameAr: 'بطاطا مع قشقوان وجبة', nameTr: 'Kaşarlı Patates Porsiyon', price: 200 },
+  // 3. وجبات الدجاج - وجبة (Tavuk Menüleri - Porsiyon)
+  { category: 'غربي - وجبة', nameAr: 'كريسبي وجبة', nameTr: 'Çıtır Tavuk Porsiyon', price: 250, hasSizeOption: false },
+  { category: 'غربي - وجبة', nameAr: 'سكالوب وجبة', nameTr: 'Galata Çıtır Tavuk Porsiyon', price: 250, hasSizeOption: false },
+  { category: 'غربي - وجبة', nameAr: 'زنجر وجبة', nameTr: 'Acı Çıtır Tavuk Porsiyon', price: 250, hasSizeOption: false },
+  { category: 'غربي - وجبة', nameAr: 'فاهيتا وجبة', nameTr: 'Tavuk Fajita Porsiyon', price: 260, hasSizeOption: false },
+  { category: 'غربي - وجبة', nameAr: 'فرانشيسكو وجبة', nameTr: 'Mantarlı Kaşarlı Tavuk Porsiyon', price: 260, hasSizeOption: false },
+  { category: 'غربي - وجبة', nameAr: 'مكسيكي وجبة', nameTr: 'Meksika Usulü Tavuk Porsiyon', price: 250, hasSizeOption: false },
+  { category: 'غربي - وجبة', nameAr: 'شيش وجبة', nameTr: 'Tavuk Şiş Porsiyon', price: 250, hasSizeOption: false },
+  { category: 'غربي - وجبة', nameAr: 'بطاطا وجبة', nameTr: 'Patates Kızartması Porsiyon', price: 150, hasSizeOption: false },
+  { category: 'غربي - وجبة', nameAr: 'بطاطا مع قشقوان وجبة', nameTr: 'Kaşarlı Patates Porsiyon', price: 170, hasSizeOption: false },
 
-  // 4. غربي - سندويش — 9 Items
-  { category: 'غربي - سندويش', nameAr: 'كريسبي سندويش', nameTr: 'Acılı çıtır tavuk Dürüm', price: 150 },
-  { category: 'غربي - سندويش', nameAr: 'سكالوب سندويش', nameTr: 'Galata ünlü çıtır tavuk Dürüm', price: 150 },
-  { category: 'غربي - سندويش', nameAr: 'زنجر سندويش', nameTr: 'Çıtır tavuk göğsü kızarması Dürüm', price: 150 },
-  { category: 'غربي - سندويش', nameAr: 'فاهيتا سندويش', nameTr: 'Fajita Dürüm', price: 150 },
-  { category: 'غربي - سندويش', nameAr: 'فرانشيسكو سندويش', nameTr: 'Mantar kaşarlı sote Dürüm', price: 150 },
-  { category: 'غربي - سندويش', nameAr: 'مكسيكي سندويش', nameTr: 'Biberli tavuk sote acılı Dürüm', price: 150 },
-  { category: 'غربي - سندويش', nameAr: 'شيش سندويش', nameTr: 'Tavuk şişi Dürüm', price: 150 },
-  { category: 'غربي - سندويش', nameAr: 'بطاطا سندويش', nameTr: 'Patates Dürüm', price: 125 },
-  { category: 'غربي - سندويش', nameAr: 'بطاطا مع قشقوان سندويش', nameTr: 'Kaşarlı Patates Dürüm', price: 170 },
+  // 4. وجبات الدجاج - سندويش (Tavuk Menüleri - Dürüm) — يدعم خيار عادي / دبل
+  { category: 'غربي - سندويش', nameAr: 'كريسبي سندويش', nameTr: 'Çıtır Tavuk Dürüm', price: 150, hasSizeOption: true, doublePrice: 200 },
+  { category: 'غربي - سندويش', nameAr: 'سكالوب سندويش', nameTr: 'Galata Çıtır Tavuk Dürüm', price: 150, hasSizeOption: true, doublePrice: 200 },
+  { category: 'غربي - سندويش', nameAr: 'زنجر سندويش', nameTr: 'Acı Çıtır Tavuk Dürüm', price: 150, hasSizeOption: true, doublePrice: 200 },
+  { category: 'غربي - سندويش', nameAr: 'فاهيتا سندويش', nameTr: 'Tavuk Fajita Dürüm', price: 150, hasSizeOption: true, doublePrice: 200 },
+  { category: 'غربي - سندويش', nameAr: 'فرانشيسكو سندويش', nameTr: 'Mantarlı Kaşarlı Tavuk Dürüm', price: 150, hasSizeOption: true, doublePrice: 200 },
+  { category: 'غربي - سندويش', nameAr: 'مكسيكي سندويش', nameTr: 'Meksika Usulü Tavuk Dürüm', price: 150, hasSizeOption: true, doublePrice: 200 },
+  { category: 'غربي - سندويش', nameAr: 'شيش سندويش', nameTr: 'Tavuk Şiş Dürüm', price: 150, hasSizeOption: true, doublePrice: 200 },
+  { category: 'غربي - سندويش', nameAr: 'بطاطا سندويش', nameTr: 'Patates Kızartması Dürüm', price: 125, hasSizeOption: true, doublePrice: 160 },
+  { category: 'غربي - سندويش', nameAr: 'بطاطا مع قشقوان سندويش', nameTr: 'Kaşarlı Patates Dürüm', price: 170, hasSizeOption: true, doublePrice: 210 },
 
-  // 5. غربي - عربي — 9 Items
-  { category: 'غربي - عربي', nameAr: 'كريسبي عربي', nameTr: 'Acılı çıtır tavuk (Arap)', price: 225 },
-  { category: 'غربي - عربي', nameAr: 'سكالوب عربي', nameTr: 'Galata ünlü çıtır tavuk (Arap)', price: 225 },
-  { category: 'غربي - عربي', nameAr: 'زنجر عربي', nameTr: 'Çıtır tavuk göğsü kızarması (Arap)', price: 225 },
-  { category: 'غربي - عربي', nameAr: 'فاهيتا عربي', nameTr: 'Fajita (Arap)', price: 225 },
-  { category: 'غربي - عربي', nameAr: 'فرانشيسكو عربي', nameTr: 'Mantar kaşarlı sote (Arap)', price: 225 },
-  { category: 'غربي - عربي', nameTr: 'Biberli tavuk sote acılı (Arap)', nameAr: 'مكسيكي عربي', price: 225 },
-  { category: 'غربي - عربي', nameAr: 'شيش عربي', nameTr: 'Tavuk şişi (Arap)', price: 225 },
-  { category: 'غربي - عربي', nameAr: 'بطاطا عربي', nameTr: 'Patates (Arap)', price: 185 },
-  { category: 'غربي - عربي', nameAr: 'بطاطا مع قشقوان عربي', nameTr: 'Kaşarlı Patates (Arap)', price: 235 },
+  // 5. وجبات الدجاج - عربي (Tavuk Menüleri - Arap Dürümü) — يدعم خيار عادي / دبل
+  { category: 'غربي - عربي', nameAr: 'كريسبي عربي', nameTr: 'Çıtır Tavuk (Arap Dürümü)', price: 225, hasSizeOption: true, doublePrice: 285 },
+  { category: 'غربي - عربي', nameAr: 'سكالوب عربي', nameTr: 'Galata Çıtır Tavuk (Arap Dürümü)', price: 225, hasSizeOption: true, doublePrice: 285 },
+  { category: 'غربي - عربي', nameAr: 'زنجر عربي', nameTr: 'Acı Çıtır Tavuk (Arap Dürümü)', price: 225, hasSizeOption: true, doublePrice: 285 },
+  { category: 'غربي - عربي', nameAr: 'فاهيتا عربي', nameTr: 'Tavuk Fajita (Arap Dürümü)', price: 225, hasSizeOption: true, doublePrice: 285 },
+  { category: 'غربي - عربي', nameAr: 'فرانشيسكو عربي', nameTr: 'Mantarlı Kaşarlı Tavuk (Arap Dürümü)', price: 225, hasSizeOption: true, doublePrice: 285 },
+  { category: 'غربي - عربي', nameAr: 'مكسيكي عربي', nameTr: 'Meksika Usulü Tavuk (Arap Dürümü)', price: 225, hasSizeOption: true, doublePrice: 285 },
+  { category: 'غربي - عربي', nameAr: 'شيش عربي', nameTr: 'Tavuk Şiş (Arap Dürümü)', price: 225, hasSizeOption: true, doublePrice: 285 },
+  { category: 'غربي - عربي', nameAr: 'بطاطا عربي', nameTr: 'Patates Kızartması (Arap Dürümü)', price: 185, hasSizeOption: true, doublePrice: 230 },
+  { category: 'غربي - عربي', nameAr: 'بطاطا مع قشقوان عربي', nameTr: 'Kaşarlı Patates (Arap Dürümü)', price: 235, hasSizeOption: true, doublePrice: 285 },
 
-  // 6. سلطات (Salatalar)
-  { category: 'سلطات', nameAr: 'سلطة شرقية', nameTr: 'Mevsim salatası', price: 140 },
-  { category: 'سلطات', nameAr: 'فتوش', nameTr: 'Fettuş', price: 140 },
-  { category: 'سلطات', nameAr: 'تبولة', nameTr: 'Tabboule', price: 140 },
-  { category: 'سلطات', nameAr: 'سلطة روسية', nameTr: 'Rus salatası', price: 90 },
-  { category: 'سلطات', nameAr: 'زينة خضرة', nameTr: 'Yeşillik / Garnitür', price: 30 },
-  { category: 'سلطات', nameAr: 'سرفيس', nameTr: 'Servis', price: 30 },
-  { category: 'سلطات', nameAr: 'مايونيز', nameTr: 'Mayonez', price: 25 },
+  // 6. سلطات وإضافات (Şark Salatası)
+  { category: 'سلطات', nameAr: 'سلطة شرقية', nameTr: 'Şark Salatası', price: 140, hasSizeOption: false },
+  { category: 'سلطات', nameAr: 'فتوش', nameTr: 'Fettuş', price: 140, hasSizeOption: false },
+  { category: 'سلطات', nameAr: 'تبولة', nameTr: 'Tabbule', price: 140, hasSizeOption: false },
+  { category: 'سلطات', nameAr: 'سلطة روسية', nameTr: 'Rus Salatası', price: 50, hasSizeOption: false },
+  { category: 'سلطات', nameAr: 'زينة خضرة', nameTr: 'Yeşillik Tabağı', price: 50, hasSizeOption: false },
+  { category: 'سلطات', nameAr: 'سرفيس', nameTr: 'Servis', price: 50, hasSizeOption: false },
+  { category: 'سلطات', nameAr: 'مايونيز', nameTr: 'Mayonez', price: 20, hasSizeOption: false },
+  { category: 'سلطات', nameAr: 'كاتشب', nameTr: 'Ketçap', price: 20, hasSizeOption: false },
 
-  // 7. كوكتيلات (Kokteyller)
-  { category: 'كوكتيلات', nameAr: 'موز و حليب', nameTr: 'Muzlu süt', price: 100 },
-  { category: 'كوكتيلات', nameAr: 'موز و حليب و فريز', nameTr: 'Muzlu çilekli süt', price: 120 },
-  { category: 'كوكتيلات', nameAr: 'موز و حليب و عسل', nameTr: 'Muzlu ballı süt', price: 120 },
-  { category: 'كوكتيلات', nameAr: 'كوكتيل فواكه', nameTr: 'Meyveli kaymaklı milkshake', price: 140 },
-  { category: 'كوكتيلات', nameAr: 'موز و حليب و شوكولاه', nameTr: 'Muzlu çikolatalı süt', price: 120 },
+  // 7. مشروبات (İçecekler)
+  { category: 'مشروبات', nameAr: 'ماء', nameTr: 'Su', price: 15, hasSizeOption: false },
+  { category: 'مشروبات', nameAr: 'كولا', nameTr: 'Cola Turka', price: 60, hasSizeOption: false },
+  { category: 'مشروبات', nameAr: 'كولا برتقال', nameTr: 'Sarıyer Orange', price: 60, hasSizeOption: false },
+  { category: 'مشروبات', nameAr: 'تشامليجا', nameTr: 'Çamlıca Gazoz', price: 50, hasSizeOption: false },
+  { category: 'مشروبات', nameAr: 'كازوز', nameTr: 'Niğde Gazozu', price: 50, hasSizeOption: false },
+  { category: 'مشروبات', nameAr: 'عيران', nameTr: 'Ayran', price: 30, hasSizeOption: false },
+  { category: 'مشروبات', nameAr: 'أفشار', nameTr: 'Avşar Maden Suyu', price: 40, hasSizeOption: false },
+  { category: 'مشروبات', nameAr: 'شاي', nameTr: 'Çay', price: 20, hasSizeOption: false },
 
-  // 8. مشروبات (İçecekler)
-  { category: 'مشروبات', nameAr: 'كولا', nameTr: 'Kola', price: 50 },
-  { category: 'مشروبات', nameAr: 'عيران', nameTr: 'Ayran', price: 25 },
-  { category: 'مشروبات', nameAr: 'شاي', nameTr: 'Çay', price: 20 }
+  // 8. كوكتيلات (Kokteyller)
+  { category: 'كوكتيلات', nameAr: 'موز و حليب', nameTr: 'Muzlu Süt', price: 100, hasSizeOption: false },
+  { category: 'كوكتيلات', nameAr: 'موز و حليب و فريز', nameTr: 'Muzlu Çilekli Süt', price: 120, hasSizeOption: false },
+  { category: 'كوكتيلات', nameAr: 'موز و حليب و عسل', nameTr: 'Muzlu Ballı Süt', price: 120, hasSizeOption: false },
+  { category: 'كوكتيلات', nameAr: 'كوكتيل فواكه', nameTr: 'Meyveli Kaymaklı Milkshake', price: 140, hasSizeOption: false },
+  { category: 'كوكتيلات', nameAr: 'موز و حليب و شوكولاه', nameTr: 'Muzlu Çikolatalı Süt', price: 120, hasSizeOption: false }
 ];
 
-const STORAGE_KEY_MENU = 'falafel_damashqi_pos_menu_v3';
+const STORAGE_KEY_MENU = 'falafel_damashqi_pos_menu_v5';
 const STORAGE_KEY_ORDERS = 'falafel_damashqi_pos_orders_v3';
+const STORAGE_KEY_ARCHIVE = 'falafel_damashqi_pos_archive_v1';
+const STORAGE_KEY_LAST_RESET = 'falafel_damashqi_pos_last_reset_v1';
+const STORAGE_KEY_AUTO_REPORT_DATE = 'falafel_damashqi_pos_auto_report_9pm_v1';
 const STORAGE_KEY_PRINT_CFG = 'falafel_damashqi_pos_print_cfg_v4';
 
 let menuData = JSON.parse(JSON.stringify(defaultMenuData));
 
+// دالة برمجية مساعدة لإضافة أو تحديث أي صنف في المنيو بسهولة
+function addOrUpdateMenuItem({ category, nameAr, nameTr, price, hasSizeOption = false, doublePrice = null }) {
+  if (!category || !nameAr) return false;
+  const cleanPrice = Number(price) || 0;
+  const isSandwich = Boolean(hasSizeOption) || category.includes('سندويش') || category.includes('عربي');
+  const cleanDouble = isSandwich ? (Number(doublePrice) || Math.round(cleanPrice * 1.3)) : cleanPrice;
+
+  const existingIdx = menuData.findIndex((m) => m.nameAr === nameAr && m.category === category);
+  const itemObj = {
+    category: String(category).trim(),
+    nameAr: String(nameAr).trim(),
+    nameTr: String(nameTr || '').trim(),
+    price: cleanPrice,
+    hasSizeOption: isSandwich,
+    doublePrice: cleanDouble
+  };
+
+  if (existingIdx !== -1) {
+    menuData[existingIdx] = itemObj;
+  } else {
+    menuData.push(itemObj);
+  }
+  saveMenuToStorage();
+  renderCategoryPills();
+  renderMenuView();
+  return true;
+}
+
 /**
  * ============================================================================
- * MODULE 2: HIGH-POWER RESTAURANT BELL & BACKGROUND AUDIO KEEP-ALIVE ENGINE
- * يضمن خروج صوت جرس قوي جداً حتى لو كان الكاشير في تبويب يوتيوب أو مصغراً كروم
+ * MODULE 2: SOFT, GENTLE NOTIFICATION CHIME ENGINE (Requirement 4)
+ * نغمة تنبيه هادئة، ناعمة، وغير مزعجة عند وصول الطلب للكاشير
  * ============================================================================
  */
 let isAudioUnlocked = false;
 let webAudioCtx = null;
-let loudBellAudioEl = null;
+let softChimeAudioEl = null;
 let silentKeepAliveAudioEl = null;
 let repeatBellTimer = null;
 let titleFlashTimer = null;
 const ORIGINAL_DOC_TITLE = document.title;
 
-// توليد ملف WAV لجرس مطعم ميكانيكي قوي جداً وعالي التردد (3 ضربات مزدوجة) داخل الذاكرة
-function generateLoudBellWavBlobUrl() {
+// توليد ملف WAV لنغمة هادئة وناعمة جداً (Soft Warm Harmonic Chime)
+function generateSoftGentleChimeWavBlobUrl() {
   const sampleRate = 44100;
-  const durationSec = 2.6;
+  const durationSec = 1.6;
   const numSamples = Math.floor(sampleRate * durationSec);
   const buffer = new ArrayBuffer(44 + numSamples * 2);
   const view = new DataView(buffer);
@@ -127,8 +165,8 @@ function generateLoudBellWavBlobUrl() {
   writeStr(8, 'WAVE');
   writeStr(12, 'fmt ');
   view.setUint32(16, 16, true);
-  view.setUint16(20, 1, true); // PCM
-  view.setUint16(22, 1, true); // Mono
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
   view.setUint32(24, sampleRate, true);
   view.setUint32(28, sampleRate * 2, true);
   view.setUint16(32, 2, true);
@@ -136,38 +174,27 @@ function generateLoudBellWavBlobUrl() {
   writeStr(36, 'data');
   view.setUint32(40, numSamples * 2, true);
 
-  // 4 ضربات جرس قوية ومتتالية (تنغ! تنغ! تنغ! تنغ!)
-  const strikes = [0.0, 0.42, 0.84, 1.35];
-  const harmonics = [
-    { freq: 1046.5, amp: 0.48, decay: 4.2 },  // C6
-    { freq: 1318.5, amp: 0.42, decay: 4.8 },  // E6
-    { freq: 1567.98, amp: 0.38, decay: 5.5 }, // G6
-    { freq: 2093.0, amp: 0.45, decay: 6.0 },  // C7 (اختراق سمعي قوي)
-    { freq: 2637.0, amp: 0.35, decay: 7.5 },  // E7
-    { freq: 3135.96, amp: 0.25, decay: 9.0 }  // G7 (رنين معدني حاد)
+  // نغمتان هادئتان متناغمتان (C5 -> E5) بموجة جيبية ناعمة (Pure Sine Wave)
+  const notes = [
+    { start: 0.0, freq: 523.25, amp: 0.22, decay: 3.2 }, // C5 هادئة
+    { start: 0.22, freq: 659.25, amp: 0.20, decay: 2.8 } // E5 دافئة
   ];
 
   for (let i = 0; i < numSamples; i++) {
     const t = i / sampleRate;
     let sample = 0;
 
-    for (let s = 0; s < strikes.length; s++) {
-      const dt = t - strikes[s];
-      if (dt >= 0 && dt < 1.15) {
-        for (let h = 0; h < harmonics.length; h++) {
-          const hm = harmonics[h];
-          const env = Math.exp(-hm.decay * dt);
-          sample += Math.sin(2 * Math.PI * hm.freq * dt) * hm.amp * env;
-        }
-        // نقرة المطرقة المعدنية في بداية كل ضربة جرس
-        if (dt < 0.015) {
-          sample += Math.sin(2 * Math.PI * 3800 * dt) * 0.55 * (1 - dt / 0.015);
-        }
+    for (let n = 0; n < notes.length; n++) {
+      const dt = t - notes[n].start;
+      if (dt >= 0) {
+        // دخول تدريجي ناعم (Soft Attack 25ms) وتلاشي هادئ
+        const attack = Math.min(1, dt / 0.025);
+        const env = attack * Math.exp(-notes[n].decay * dt);
+        sample += Math.sin(2 * Math.PI * notes[n].freq * dt) * notes[n].amp * env;
+        sample += Math.sin(2 * Math.PI * (notes[n].freq * 2) * dt) * (notes[n].amp * 0.15) * env;
       }
     }
 
-    // تضخيم وضغط الصوت لأقصى شدة بدون تشويه (Hard Limiter)
-    sample = Math.tanh(sample * 1.65) * 0.98;
     const pcmVal = Math.max(-32767, Math.min(32767, Math.floor(sample * 32767)));
     view.setInt16(44 + i * 2, pcmVal, true);
   }
@@ -176,7 +203,6 @@ function generateLoudBellWavBlobUrl() {
   return URL.createObjectURL(blob);
 }
 
-// توليد قناة صوتية خفية تمنع كروم من إيقاف الصوت عند فتح يوتيوب أو تصغير المتصفح
 function generateSilentKeepAliveWavUrl() {
   const sampleRate = 8000;
   const numSamples = sampleRate * 2;
@@ -202,7 +228,7 @@ function generateSilentKeepAliveWavUrl() {
   view.setUint32(40, numSamples * 2, true);
 
   for (let i = 0; i < numSamples; i++) {
-    view.setInt16(44 + i * 2, i % 2 === 0 ? 1 : -1, true);
+    view.setInt16(44 + i * 2, 0, true);
   }
 
   const blob = new Blob([buffer], { type: 'audio/wav' });
@@ -210,10 +236,10 @@ function generateSilentKeepAliveWavUrl() {
 }
 
 function initAudioElements() {
-  if (!loudBellAudioEl) {
-    loudBellAudioEl = new Audio(generateLoudBellWavBlobUrl());
-    loudBellAudioEl.preload = 'auto';
-    loudBellAudioEl.volume = 1.0;
+  if (!softChimeAudioEl) {
+    softChimeAudioEl = new Audio(generateSoftGentleChimeWavBlobUrl());
+    softChimeAudioEl.preload = 'auto';
+    softChimeAudioEl.volume = 0.45;
   }
   if (!silentKeepAliveAudioEl) {
     silentKeepAliveAudioEl = new Audio(generateSilentKeepAliveWavUrl());
@@ -239,7 +265,6 @@ function unlockCashierAudio(showNotification) {
     silentKeepAliveAudioEl.play().catch(() => {});
   } catch (e) {}
 
-  // طلب إذن إشعارات سطح المكتب للظهور فوق يوتيوب أو خارج كروم
   try {
     if ('Notification' in window && Notification.permission === 'default') {
       Notification.requestPermission().catch(() => {});
@@ -257,49 +282,41 @@ function markAudioUnlockedUI(showNotification) {
   if (btn && icon && text) {
     btn.classList.add('unlocked');
     icon.textContent = '🔔';
-    text.textContent = 'الجرس القوي مفعّل (يعمل بالخلفية)';
+    text.textContent = 'النغمة الهادئة مفعّلة / Ses Aktif';
   }
   if (showNotification) {
     playOrderAlertPing();
-    showToast('🔔 تم تفعيل الجرس القوي والعمل في الخلفية بنجاح!', 'success');
+    showToast('🔔 تم تفعيل نغمة التنبيه الهادئة بنجاح!', 'success');
   }
 }
 
-// تشغيل رنين قوي جداً عبر Web Audio API مع مضخم صوت (GainBoost)
-function playSynthesizedHighPowerBell() {
+function playSynthesizedSoftChime() {
   try {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
     if (!webAudioCtx) webAudioCtx = new AudioContextClass();
     if (webAudioCtx.state === 'suspended') webAudioCtx.resume();
 
-    const compressor = webAudioCtx.createDynamicsCompressor();
-    compressor.threshold.setValueAtTime(-18, webAudioCtx.currentTime);
-    compressor.knee.setValueAtTime(10, webAudioCtx.currentTime);
-    compressor.ratio.setValueAtTime(12, webAudioCtx.currentTime);
-    compressor.attack.setValueAtTime(0, webAudioCtx.currentTime);
-    compressor.release.setValueAtTime(0.2, webAudioCtx.currentTime);
-    compressor.connect(webAudioCtx.destination);
-
     const now = webAudioCtx.currentTime;
-    const strikes = [0, 0.38, 0.76, 1.25];
-    const chord = [1046.5, 1318.5, 1567.98, 2093.0, 2637.0];
+    const softNotes = [
+      { freq: 523.25, delay: 0.0, duration: 1.1 },  // C5
+      { freq: 659.25, delay: 0.22, duration: 1.3 }  // E5
+    ];
 
-    strikes.forEach((strikeOffset) => {
-      chord.forEach((freq, idx) => {
-        const osc = webAudioCtx.createOscillator();
-        const gain = webAudioCtx.createGain();
-        osc.type = idx % 2 === 0 ? 'sawtooth' : 'triangle';
-        osc.frequency.setValueAtTime(freq, now + strikeOffset);
+    softNotes.forEach((n) => {
+      const osc = webAudioCtx.createOscillator();
+      const gain = webAudioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(n.freq, now + n.delay);
 
-        gain.gain.setValueAtTime(0.45, now + strikeOffset);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + strikeOffset + 0.85);
+      gain.gain.setValueAtTime(0.001, now + n.delay);
+      gain.gain.linearRampToValueAtTime(0.18, now + n.delay + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + n.delay + n.duration);
 
-        osc.connect(gain);
-        gain.connect(compressor);
-        osc.start(now + strikeOffset);
-        osc.stop(now + strikeOffset + 0.86);
-      });
+      osc.connect(gain);
+      gain.connect(webAudioCtx.destination);
+      osc.start(now + n.delay);
+      osc.stop(now + n.delay + n.duration + 0.02);
     });
   } catch (e) {}
 }
@@ -307,18 +324,16 @@ function playSynthesizedHighPowerBell() {
 function playOrderAlertPing() {
   initAudioElements();
 
-  // 1. تشغيل ملف الـ WAV القوي (يعمل حتى لو كان التبويب في الخلفية أو مصغراً)
   try {
-    loudBellAudioEl.currentTime = 0;
-    loudBellAudioEl.volume = 1.0;
-    const p = loudBellAudioEl.play();
+    softChimeAudioEl.currentTime = 0;
+    softChimeAudioEl.volume = 0.45;
+    const p = softChimeAudioEl.play();
     if (p !== undefined) {
       p.catch(() => {});
     }
   } catch (e) {}
 
-  // 2. تشغيل المولد الصوتي المضخم بالتوازي لمضاعفة قوة الجرس
-  playSynthesizedHighPowerBell();
+  playSynthesizedSoftChime();
 }
 
 function sendBackgroundSystemNotification(title, bodyText) {
@@ -327,8 +342,7 @@ function sendBackgroundSystemNotification(title, bodyText) {
       const n = new Notification(title, {
         body: bodyText,
         tag: 'falafel-pos-order-alert',
-        renotify: true,
-        requireInteraction: true
+        renotify: true
       });
       n.onclick = () => {
         window.focus();
@@ -353,9 +367,9 @@ function updateBackgroundAlarmLoop() {
       titleFlashTimer = setInterval(() => {
         toggle = !toggle;
         document.title = toggle
-          ? `🔔 (${unacknowledgedOrders.length}) طلب جديد! — فلافل الدمشقي`
+          ? `🔔 (${unacknowledgedOrders.length}) طلب جديد — فلافل الدمشقي`
           : ORIGINAL_DOC_TITLE;
-      }, 900);
+      }, 1200);
     }
 
     if (state.repeatBellUntilAccepted && !repeatBellTimer) {
@@ -368,7 +382,7 @@ function updateBackgroundAlarmLoop() {
         } else {
           stopBackgroundAlarmLoop();
         }
-      }, 5500);
+      }, 10000);
     }
   } else {
     stopBackgroundAlarmLoop();
@@ -394,14 +408,13 @@ function toggleRepeatBellSetting() {
   const btn = document.getElementById('btn-toggle-repeat-bell');
   if (btn) {
     btn.textContent = state.repeatBellUntilAccepted
-      ? '🔁 تكرار الجرس: مفعّل'
-      : '🔂 تكرار الجرس: مرة واحدة';
+      ? '🔁 تذكير النغمة الهادئة: مفعّل'
+      : '🔂 تذكير النغمة: مرة واحدة';
     btn.className = state.repeatBellUntilAccepted ? 'btn-gold' : 'btn-secondary';
   }
   updateBackgroundAlarmLoop();
 }
 
-// فك قفل الصوت تلقائياً عند أول نقرة في أي مكان بالصفحة
 document.addEventListener(
   'click',
   () => {
@@ -423,28 +436,52 @@ const state = {
   selectedCategory: 'ALL',
   searchQuery: '',
   selectedTable: '',
-  targetExistingOrderId: null, // عندما يريد النادل إضافة أصناف لطلب طاولة قائم
+  targetExistingOrderId: null,
+  selectedSizes: {}, // { [itemIndex]: 'normal' | 'double' }
+  draftNotes: {},    // { [itemIndex]: 'بدون صوص...' }
   cart: [],
   orders: [],
+  archivedOrders: [],
   repeatBellUntilAccepted: true,
   cashierEditingOrderId: null,
   cashierEditDraftItems: [],
   cashierEditTable: '',
   cashierPickerQuery: '',
   cashierPickerCategory: 'ALL',
+  pendingDeleteOrderId: null,
   printConfig: {
-    preset: 'zjiang58', // 'zjiang58' (46mm), 'full58' (48mm), 'safe42' (42mm), '80' (72mm)
-    align: 'right',     // 'right', 'center', 'left'
+    preset: 'zjiang58',
+    align: 'right',
     offsetMm: 0
   }
 };
+
+function getLocalDateISO() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function isSandwichItem(item) {
+  if (!item) return false;
+  if (typeof item.hasSizeOption === 'boolean') return item.hasSizeOption;
+  return item.category.includes('سندويش') || item.category.includes('عربي');
+}
+
+function getDoublePrice(item) {
+  if (!item) return 0;
+  if (item.doublePrice && Number(item.doublePrice) > 0) return Number(item.doublePrice);
+  return Math.round(Number(item.price) * 1.3);
+}
 
 function loadMenuFromStorage() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY_MENU);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length === defaultMenuData.length) {
+      if (Array.isArray(parsed) && parsed.length > 0) {
         menuData = parsed;
         return;
       }
@@ -464,15 +501,190 @@ function loadOrdersFromStorage() {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) {
         state.orders = parsed;
-        return;
       }
     }
-  } catch (e) {}
-  state.orders = [];
+    const rawArch = localStorage.getItem(STORAGE_KEY_ARCHIVE);
+    if (rawArch) {
+      const parsedArch = JSON.parse(rawArch);
+      if (Array.isArray(parsedArch)) {
+        state.archivedOrders = parsedArch;
+      }
+    }
+  } catch (e) {
+    state.orders = [];
+  }
 }
 
 function saveOrdersToStorage() {
   try { localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(state.orders)); } catch (e) {}
+}
+
+function saveArchivedOrdersToStorage() {
+  try { localStorage.setItem(STORAGE_KEY_ARCHIVE, JSON.stringify(state.archivedOrders)); } catch (e) {}
+}
+
+/**
+ * ============================================================================
+ * MODULE 5: DAILY 24-HOUR AUTOMATIC RESET & 9:00 PM AUTO DAILY REPORT
+ * (Requirements 5 & 6)
+ * ============================================================================
+ */
+async function checkAndRunDailyReset() {
+  const todayISO = getLocalDateISO();
+  let lastResetDate = '';
+  try {
+    lastResetDate = localStorage.getItem(STORAGE_KEY_LAST_RESET) || '';
+  } catch (e) {}
+
+  if (!lastResetDate) {
+    try { localStorage.setItem(STORAGE_KEY_LAST_RESET, todayISO); } catch (e) {}
+    return;
+  }
+
+  // إذا دخل يوم جديد (منتصف الليل 00:00 أو أول فتح في اليوم الجديد)
+  if (lastResetDate !== todayISO) {
+    const completedToArchive = state.orders.filter((o) => o.status === 'completed');
+    const remainingActive = state.orders.filter((o) => o.status !== 'completed');
+
+    if (completedToArchive.length > 0) {
+      state.archivedOrders = [...completedToArchive, ...state.archivedOrders].slice(0, 500);
+      saveArchivedOrdersToStorage();
+
+      // حذف الطلبات المكتملة المؤرشفة من السحابة ليبدأ اليوم الجديد بصفر
+      for (const compOrd of completedToArchive) {
+        try {
+          fetch(`${FIREBASE_DB_URL}/orders/${compOrd.id}.json`, { method: 'DELETE' }).catch(() => {});
+        } catch (e) {}
+      }
+    }
+
+    state.orders = remainingActive;
+    saveOrdersToStorage();
+    try { localStorage.setItem(STORAGE_KEY_LAST_RESET, todayISO); } catch (e) {}
+
+    updateHeaderBadges();
+    renderCashierKanban();
+    renderWaiterActiveOrdersStrip();
+    showToast('🔄 تم تصفير الطلبات المكتملة تلقائياً لبداية يوم جديد (00:00)', 'success');
+  }
+}
+
+function checkAutoDailyReport9PM() {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const todayISO = getLocalDateISO();
+
+  // عند الساعة 9:00 مساءً (21:00) يتم إصدار وعرض التقرير اليومي تلقائياً مرة واحدة يومياً
+  if (hours === 21 && minutes >= 0) {
+    let lastShownDate = '';
+    try {
+      lastShownDate = localStorage.getItem(STORAGE_KEY_AUTO_REPORT_DATE) || '';
+    } catch (e) {}
+
+    if (lastShownDate !== todayISO) {
+      try { localStorage.setItem(STORAGE_KEY_AUTO_REPORT_DATE, todayISO); } catch (e) {}
+      openDailyReport9PMModal(true);
+      playOrderAlertPing();
+      showToast('📊 تم إصدار التقرير اليومي التلقائي (الساعة 9:00 مساءً)', 'success');
+    }
+  }
+}
+
+function openDailyReport9PMModal(isAutoTriggered = false) {
+  const todayISO = getLocalDateISO();
+  const nowTime = new Date().toTimeString().slice(0, 5);
+
+  // جمع طلبات اليوم (النشطة والمكتملة)
+  const todayOrders = state.orders.filter((o) => (o.dateISO || todayISO) === todayISO);
+  const completedToday = todayOrders.filter((o) => o.status === 'completed');
+  const preparingToday = todayOrders.filter((o) => o.status === 'preparing');
+  const newToday = todayOrders.filter((o) => o.status === 'new');
+
+  const completedRevenue = completedToday.reduce((s, o) => s + Number(o.total || 0), 0);
+  const pendingRevenue = [...preparingToday, ...newToday].reduce((s, o) => s + Number(o.total || 0), 0);
+  const totalDayRevenue = completedRevenue + pendingRevenue;
+
+  // حساب أكثر الأصناف طلباً اليوم
+  const itemMap = new Map();
+  todayOrders.forEach((ord) => {
+    (ord.items || []).forEach((it) => {
+      const key = it.nameAr;
+      const prev = itemMap.get(key) || { nameAr: it.nameAr, qty: 0, rev: 0 };
+      prev.qty += Number(it.qty || 0);
+      prev.rev += Number(it.qty || 0) * Number(it.price || 0);
+      itemMap.set(key, prev);
+    });
+  });
+
+  const topItems = Array.from(itemMap.values()).sort((a, b) => b.qty - a.qty);
+  const topRowsHtml = topItems.map((it, idx) => `
+    <tr>
+      <td class="receipt-col-item">
+        <div class="receipt-item-ar">${idx + 1}. ${escapeHtml(it.nameAr)}</div>
+      </td>
+      <td class="receipt-col-qty">${it.qty}x</td>
+      <td class="receipt-col-total">${formatPriceClean(it.rev)}</td>
+    </tr>
+  `).join('');
+
+  const html = `
+    <div class="receipt-wrapper">
+      <div class="receipt-logo-wrap">
+        <img src="Falafel aldmşke.png" alt="Logo" class="receipt-logo-img">
+      </div>
+      <div class="receipt-header">
+        <div class="receipt-brand-ar">التقرير اليومي (9:00 مساءً)</div>
+        <div class="receipt-brand-tr">FALAFEL ALDMŞKE • DAILY REPORT</div>
+        <div class="receipt-phones">${todayISO} • ${nowTime}</div>
+      </div>
+      <div class="receipt-meta">
+        <div class="receipt-meta-row">
+          <span>إجمالي طلبات اليوم:</span>
+          <strong class="ltr-text">${todayOrders.length} طلب</strong>
+        </div>
+        <div class="receipt-meta-row">
+          <span>الطلبات المكتملة:</span>
+          <strong class="ltr-text">${completedToday.length} (${formatPriceClean(completedRevenue)} TL)</strong>
+        </div>
+        <div class="receipt-meta-row">
+          <span>قيد التحضير / جديدة:</span>
+          <strong class="ltr-text">${preparingToday.length + newToday.length} (${formatPriceClean(pendingRevenue)} TL)</strong>
+        </div>
+      </div>
+      <div style="font-weight:900; font-size:11px; text-align:right; margin-bottom:3px; border-bottom:1px solid #000;">
+        🏆 أكثر الأصناف طلباً اليوم:
+      </div>
+      <table class="receipt-table">
+        <thead>
+          <tr>
+            <th class="receipt-col-item">الصنف</th>
+            <th class="receipt-col-qty">الكمية</th>
+            <th class="receipt-col-total">الإجمالي</th>
+          </tr>
+        </thead>
+        <tbody>${topRowsHtml || '<tr><td colspan="3" style="text-align:center;">لا توجد طلبات مسجلة اليوم</td></tr>'}</tbody>
+      </table>
+      <div class="receipt-total-block">
+        <span>إجمالي مبيعات اليوم:</span>
+        <span class="ltr-text">${formatPriceClean(totalDayRevenue)} TL</span>
+      </div>
+      <div class="receipt-footer">
+        <div>${isAutoTriggered ? 'تقرير يومي تلقائي — الساعة 9:00 مساءً' : 'تقرير مبيعات اليوم المباشر'}</div>
+      </div>
+    </div>
+  `;
+
+  const titleEl = document.getElementById('receipt-modal-title');
+  if (titleEl) {
+    titleEl.textContent = isAutoTriggered
+      ? '🕘 التقرير اليومي التلقائي (الساعة 9:00 مساءً)'
+      : '📊 التقرير اليومي الشامل (مبيعات وطلبات اليوم)';
+  }
+
+  document.getElementById('print-section').innerHTML = html;
+  document.getElementById('modal-thermal-preview').innerHTML = html;
+  document.getElementById('receipt-modal-backdrop').classList.add('open');
 }
 
 function showToast(message, type = 'gold') {
@@ -568,8 +780,7 @@ function handleSearchInput(val) {
 
 /**
  * ============================================================================
- * WAITER FEATURE: ADDING NEW ITEMS TO AN EXISTING TABLE ORDER
- * إمكانية إضافة أصناف جديدة لطاولة لديها طلب مفتوح (مثلاً طاولة 5)
+ * WAITER FEATURE: ACTIVE TABLE ORDERS & DELETE WRONG ORDER (Requirement 8)
  * ============================================================================
  */
 function getActiveOrderForTable(tableName) {
@@ -588,7 +799,6 @@ function handleTableChange(tableVal) {
   if (cartSelect) cartSelect.value = tableVal;
   if (cartTableBox && tableVal) cartTableBox.classList.remove('error-highlight');
 
-  // إذا غير النادل الطاولة، نتحقق إن كان عليها طلب نشط
   const existing = getActiveOrderForTable(tableVal);
   if (state.targetExistingOrderId) {
     const targetOrd = state.orders.find((o) => o.id === state.targetExistingOrderId);
@@ -635,7 +845,6 @@ function renderWaiterActiveOrdersStrip() {
     (o) => o.status === 'new' || o.status === 'preparing'
   );
 
-  // شريط وضع الإضافة النشط
   const targetOrder = state.targetExistingOrderId
     ? state.orders.find((o) => o.id === state.targetExistingOrderId)
     : getActiveOrderForTable(state.selectedTable);
@@ -680,20 +889,40 @@ function renderWaiterActiveOrdersStrip() {
           <span class="ltr-text" style="font-size:0.75rem; color:var(--text-muted); margin-right:4px;">#${escapeHtml(ord.id)}</span>
           <div style="font-size:0.72rem; color:var(--text-muted);">${statusLabel} • ${ord.items.length} أصناف (${Number(ord.total)} ₺)</div>
         </div>
-        <button type="button" class="btn-append-table ${isTarget ? 'active-mode' : ''}" onclick="startWaiterAppendToOrder('${ord.id}')">
-          ${isTarget ? '✓ جاري الإضافة...' : '➕ إضافة أصناف'}
-        </button>
+        <div style="display:flex; gap:0.35rem; align-items:center;">
+          <button type="button" class="btn-append-table ${isTarget ? 'active-mode' : ''}" onclick="startWaiterAppendToOrder('${ord.id}')">
+            ${isTarget ? '✓ جاري الإضافة' : '➕ إضافة'}
+          </button>
+          <button type="button" class="btn-waiter-delete-order" onclick="openDeleteOrderConfirmModal('${ord.id}')" title="حذف الطلب الخطأ حتى لو قيد التحضير">
+            🗑️ حذف الطلب
+          </button>
+        </div>
       </div>
     `;
   }).join('');
 
   stripEl.innerHTML = `
     <div class="active-tables-header">
-      <span>🪑 الطاولات المفتوحة حالياً (اضغط "➕ إضافة أصناف" لإضافة طلبات جديدة لنفس الطاولة):</span>
-      <span style="font-size:0.75rem; color:var(--text-muted);">${activeOrders.length} طاولات نشطة</span>
+      <span>🪑 الطلبات النشطة حالياً (يمكن للنادل إضافة أصناف أو حذف الطلب الخطأ حتى لو كان قيد التحضير):</span>
+      <span style="font-size:0.75rem; color:var(--text-muted);">${activeOrders.length} طلبات نشطة</span>
     </div>
     <div class="active-tables-list">${chipsHtml}</div>
   `;
+}
+
+/**
+ * ============================================================================
+ * MENU RENDERING WITH SANDWICH SIZE (NORMAL/DOUBLE) & ITEM NOTES
+ * (Requirements 2 & 3)
+ * ============================================================================
+ */
+function selectItemSize(itemIndex, sizeMode) {
+  state.selectedSizes[itemIndex] = sizeMode;
+  renderMenuView();
+}
+
+function handleDraftNoteInput(itemIndex, val) {
+  state.draftNotes[itemIndex] = val;
 }
 
 function renderMenuView() {
@@ -730,22 +959,56 @@ function renderMenuView() {
     grid.className = 'menu-grid';
 
     itemsInCat.forEach((item) => {
-      const cartEntry = state.cart.find((c) => c.itemIndex === item.itemIndex);
-      const qtyInCart = cartEntry ? Number(cartEntry.qty) : 0;
+      const matchingInCart = state.cart.filter((c) => c.itemIndex === item.itemIndex);
+      const qtyInCart = matchingInCart.reduce((s, c) => s + Number(c.qty), 0);
+
+      const hasSizes = isSandwichItem(item);
+      const currentSize = state.selectedSizes[item.itemIndex] || 'normal';
+      const normalPrice = Number(item.price);
+      const doublePrice = getDoublePrice(item);
+      const activePrice = hasSizes && currentSize === 'double' ? doublePrice : normalPrice;
+      const draftNoteVal = state.draftNotes[item.itemIndex] || '';
+
+      const sizeSelectorHtml = hasSizes ? `
+        <div class="size-selector-group">
+          <button type="button" class="btn-size-option ${currentSize === 'normal' ? 'active' : ''}" onclick="selectItemSize(${item.itemIndex}, 'normal')">
+            <span>عادي (Normal)</span>
+            <span class="ltr-text">${normalPrice}₺</span>
+          </button>
+          <button type="button" class="btn-size-option ${currentSize === 'double' ? 'active' : ''}" onclick="selectItemSize(${item.itemIndex}, 'double')">
+            <span>🔥 دبل (Double)</span>
+            <span class="ltr-text">${doublePrice}₺</span>
+          </button>
+        </div>
+      ` : '';
 
       const card = document.createElement('div');
       card.className = `menu-card ${qtyInCart > 0 ? 'in-cart' : ''}`;
       card.innerHTML = `
-        <div class="menu-card-names">
-          <div class="menu-name-ar">${escapeHtml(item.nameAr)}</div>
-          <div class="menu-name-tr">${escapeHtml(item.nameTr)}</div>
+        <div class="menu-card-top-row">
+          <div class="menu-card-names">
+            <div class="menu-name-ar">${escapeHtml(item.nameAr)}</div>
+            <div class="menu-name-tr">${escapeHtml(item.nameTr)}</div>
+          </div>
+          <div class="menu-card-right">
+            <span class="menu-price-tag">${activePrice} ₺</span>
+            <button type="button" class="btn-add-item" onclick="addItemToCart(${item.itemIndex})">
+              +
+              ${qtyInCart > 0 ? `<span class="item-qty-indicator">${qtyInCart}</span>` : ''}
+            </button>
+          </div>
         </div>
-        <div class="menu-card-right">
-          <span class="menu-price-tag">${Number(item.price)} ₺</span>
-          <button type="button" class="btn-add-item" onclick="addItemToCart(${item.itemIndex})">
-            +
-            ${qtyInCart > 0 ? `<span class="item-qty-indicator">${qtyInCart}</span>` : ''}
-          </button>
+        <div class="menu-card-options-row">
+          ${sizeSelectorHtml}
+          <div class="item-note-inline-wrap">
+            <input
+              type="text"
+              class="item-note-input"
+              placeholder="📝 ملاحظة خاصة (مثلاً: بدون صوص، زيادة طحينة...)"
+              value="${escapeHtml(draftNoteVal)}"
+              oninput="handleDraftNoteInput(${item.itemIndex}, this.value)"
+            />
+          </div>
         </div>
       `;
       grid.appendChild(card);
@@ -761,26 +1024,48 @@ function renderMenuView() {
 function addItemToCart(itemIndex) {
   const sourceItem = menuData[itemIndex];
   if (!sourceItem) return;
-  const existing = state.cart.find((c) => c.itemIndex === itemIndex);
+
+  const hasSizes = isSandwichItem(sourceItem);
+  const chosenSize = hasSizes ? (state.selectedSizes[itemIndex] || 'normal') : 'standard';
+  const unitPrice = (hasSizes && chosenSize === 'double')
+    ? getDoublePrice(sourceItem)
+    : Number(sourceItem.price);
+
+  const noteText = String(state.draftNotes[itemIndex] || '').trim();
+
+  const sizeLabelAr = chosenSize === 'double' ? ' (دبل)' : (chosenSize === 'normal' ? ' (عادي)' : '');
+  const sizeLabelTr = chosenSize === 'double' ? ' (Double)' : (chosenSize === 'normal' ? ' (Normal)' : '');
+
+  const cartKey = `${itemIndex}__${chosenSize}__${noteText}`;
+  const existing = state.cart.find((c) => c.cartKey === cartKey);
+
   if (existing) {
     existing.qty += 1;
   } else {
     state.cart.push({
+      cartKey,
       itemIndex,
-      nameAr: sourceItem.nameAr,
-      nameTr: sourceItem.nameTr,
-      price: Number(sourceItem.price),
+      nameAr: `${sourceItem.nameAr}${sizeLabelAr}`,
+      nameTr: `${sourceItem.nameTr}${sizeLabelTr}`,
+      baseNameAr: sourceItem.nameAr,
+      size: chosenSize,
+      note: noteText,
+      price: unitPrice,
       qty: 1
     });
   }
+
+  // تفريغ حقل الملاحظة بعد الإضافة ليكون جاهزاً للصنف التالي
+  state.draftNotes[itemIndex] = '';
+
   updateHeaderBadges();
   renderWaiterActiveOrdersStrip();
   renderMenuView();
-  showToast(`+1 ${sourceItem.nameAr}`, 'gold');
+  showToast(`+1 ${sourceItem.nameAr}${sizeLabelAr}${noteText ? ' 📝' : ''}`, 'gold');
 }
 
-function updateCartItemQty(itemIndex, delta) {
-  const idx = state.cart.findIndex((c) => c.itemIndex === itemIndex);
+function updateCartItemQtyByKey(cartKey, delta) {
+  const idx = state.cart.findIndex((c) => c.cartKey === cartKey);
   if (idx === -1) return;
   state.cart[idx].qty += delta;
   if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
@@ -789,8 +1074,14 @@ function updateCartItemQty(itemIndex, delta) {
   renderMenuView();
 }
 
-function removeCartItem(itemIndex) {
-  state.cart = state.cart.filter((c) => c.itemIndex !== itemIndex);
+function updateCartItemNoteByKey(cartKey, newNote) {
+  const item = state.cart.find((c) => c.cartKey === cartKey);
+  if (!item) return;
+  item.note = String(newNote || '').trim();
+}
+
+function removeCartItemByKey(cartKey) {
+  state.cart = state.cart.filter((c) => c.cartKey !== cartKey);
   updateHeaderBadges();
   renderCartView();
   renderMenuView();
@@ -828,7 +1119,6 @@ function renderCartView() {
 
   if (cartSelect) cartSelect.value = state.selectedTable;
 
-  // فحص هل الطاولة المختارة لديها طلب مفتوح حالياً
   const activeOrd = state.targetExistingOrderId
     ? state.orders.find((o) => o.id === state.targetExistingOrderId)
     : getActiveOrderForTable(state.selectedTable);
@@ -889,23 +1179,38 @@ function renderCartView() {
   }
 
   container.innerHTML = '';
-  state.cart.forEach((item) => {
+  state.cart.forEach((item, idx) => {
     const lineTotal = Number(item.price) * Number(item.qty);
+    const sizeBadge = item.size === 'double'
+      ? `<span class="item-size-badge size-double">🔥 دبل / Double</span>`
+      : (item.size === 'normal' ? `<span class="item-size-badge size-normal">عادي / Normal</span>` : '');
+
     const row = document.createElement('div');
     row.className = 'cart-item-row';
     row.innerHTML = `
-      <div class="cart-item-info">
-        <div class="cart-item-title-ar">${escapeHtml(item.nameAr)}</div>
-        <div class="cart-item-title-tr">${escapeHtml(item.nameTr)}</div>
-      </div>
-      <div class="cart-item-controls">
-        <div class="qty-stepper">
-          <button type="button" class="btn-qty" onclick="updateCartItemQty(${item.itemIndex}, -1)">−</button>
-          <span class="qty-value">${Number(item.qty)}</span>
-          <button type="button" class="btn-qty" onclick="updateCartItemQty(${item.itemIndex}, 1)">+</button>
+      <div class="cart-item-main-line">
+        <div class="cart-item-info">
+          <div class="cart-item-title-ar">${escapeHtml(item.nameAr)} ${sizeBadge}</div>
+          <div class="cart-item-title-tr">${escapeHtml(item.nameTr)}</div>
         </div>
-        <div class="cart-item-price">${lineTotal} ₺</div>
-        <button type="button" class="btn-trash" onclick="removeCartItem(${item.itemIndex})">🗑️</button>
+        <div class="cart-item-controls">
+          <div class="qty-stepper">
+            <button type="button" class="btn-qty" onclick="updateCartItemQtyIndex(${idx}, -1)">−</button>
+            <span class="qty-value">${Number(item.qty)}</span>
+            <button type="button" class="btn-qty" onclick="updateCartItemQtyIndex(${idx}, 1)">+</button>
+          </div>
+          <div class="cart-item-price">${lineTotal} ₺</div>
+          <button type="button" class="btn-trash" onclick="removeCartItemIndex(${idx})">🗑️</button>
+        </div>
+      </div>
+      <div class="item-note-inline-wrap">
+        <input
+          type="text"
+          class="item-note-input"
+          placeholder="📝 ملاحظة خاصة لهذا الصنف (تظهر للكاشير والمطبخ ولا تطبع بالفيش)..."
+          value="${escapeHtml(item.note || '')}"
+          oninput="updateCartItemNoteIndex(${idx}, this.value)"
+        />
       </div>
     `;
     container.appendChild(row);
@@ -914,7 +1219,27 @@ function renderCartView() {
   grandTotalEl.textContent = `${calculateCartTotal()} ₺`;
 }
 
-// دمج الأصناف الجديدة مع طلب الطاولة المفتوح وإرسال تنبيه قوي للكاشير
+function updateCartItemQtyIndex(idx, delta) {
+  if (!state.cart[idx]) return;
+  state.cart[idx].qty += delta;
+  if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
+  updateHeaderBadges();
+  renderCartView();
+  renderMenuView();
+}
+
+function updateCartItemNoteIndex(idx, val) {
+  if (!state.cart[idx]) return;
+  state.cart[idx].note = String(val || '').trim();
+}
+
+function removeCartItemIndex(idx) {
+  state.cart.splice(idx, 1);
+  updateHeaderBadges();
+  renderCartView();
+  renderMenuView();
+}
+
 async function appendCartToExistingOrder(orderId) {
   if (state.cart.length === 0) {
     showToast('السلة فارغة! أضف الأصناف الإضافية أولاً', 'danger');
@@ -932,7 +1257,9 @@ async function appendCartToExistingOrder(orderId) {
   const updatedItems = JSON.parse(JSON.stringify(order.items));
 
   state.cart.forEach((cartItem) => {
-    const existingItem = updatedItems.find((it) => it.nameAr === cartItem.nameAr);
+    const existingItem = updatedItems.find(
+      (it) => it.nameAr === cartItem.nameAr && (it.note || '') === (cartItem.note || '') && (it.size || '') === (cartItem.size || '')
+    );
     if (existingItem) {
       existingItem.qty = Number(existingItem.qty) + Number(cartItem.qty);
       existingItem.addedQty = (Number(existingItem.addedQty) || 0) + Number(cartItem.qty);
@@ -940,6 +1267,8 @@ async function appendCartToExistingOrder(orderId) {
       updatedItems.push({
         nameAr: cartItem.nameAr,
         nameTr: cartItem.nameTr,
+        size: cartItem.size || 'standard',
+        note: cartItem.note || '',
         price: Number(cartItem.price),
         qty: Number(cartItem.qty),
         addedQty: Number(cartItem.qty)
@@ -994,7 +1323,6 @@ async function submitWaiterOrder(forceSeparate = false) {
     return;
   }
 
-  // إذا كان النادل في وضع الإضافة لطلب قائم ولم يضغط "منفصل"
   if (!forceSeparate && state.targetExistingOrderId) {
     await appendCartToExistingOrder(state.targetExistingOrderId);
     return;
@@ -1012,13 +1340,15 @@ async function submitWaiterOrder(forceSeparate = false) {
     table: state.selectedTable,
     createdAt: now.toTimeString().slice(0, 5),
     timestamp: Date.now(),
-    dateISO: now.toISOString().slice(0, 10),
+    dateISO: getLocalDateISO(),
     status: 'new',
     revision: 1,
     hasUnreadAdditions: false,
     items: state.cart.map((c) => ({
       nameAr: c.nameAr,
       nameTr: c.nameTr,
+      size: c.size || 'standard',
+      note: c.note || '',
       price: Number(c.price),
       qty: Number(c.qty)
     })),
@@ -1063,7 +1393,6 @@ async function submitWaiterOrder(forceSeparate = false) {
 /**
  * ============================================================================
  * CLOUD SYNC & BACKGROUND WEB WORKER POLLING
- * يعمل في الخلفية عبر Web Worker حتى عند فتح يوتيوب أو تصغير نافذة كروم
  * ============================================================================
  */
 let isSyncingNow = false;
@@ -1083,6 +1412,11 @@ async function syncNowFromCloud(manualTrigger = false) {
     const data = await res.json();
 
     if (!data) {
+      state.orders = [];
+      saveOrdersToStorage();
+      updateHeaderBadges();
+      renderCashierKanban();
+      if (state.roleMode === 'waiter') renderWaiterActiveOrdersStrip();
       if (manualTrigger) showToast('لا توجد طلبات مسجلة في السحابة حالياً', 'gold');
       isSyncingNow = false;
       return;
@@ -1141,7 +1475,6 @@ async function syncNowFromCloud(manualTrigger = false) {
   }
 }
 
-// إنشاء Web Worker يعمل في مسار خلفي مستقل لا يتوقف عند فتح يوتيوب أو تصغير كروم
 function startBackgroundSyncWorker() {
   try {
     const workerCode = `
@@ -1155,7 +1488,6 @@ function startBackgroundSyncWorker() {
       syncNowFromCloud(false);
     };
   } catch (e) {
-    // Fallback if Worker is restricted
     setInterval(() => syncNowFromCloud(false), 2000);
   }
 }
@@ -1193,8 +1525,44 @@ async function updateOrderStatus(orderId, nextStatus) {
   showToast(`تم نقل الطلب #${orderId} إلى: ${statusAr}`, 'success');
 }
 
+/**
+ * ============================================================================
+ * DELETE WRONG ORDER FOR WAITER & CASHIER EVEN IF PREPARING (Requirement 8)
+ * ============================================================================
+ */
+function openDeleteOrderConfirmModal(orderId) {
+  const order = state.orders.find((o) => o.id === orderId);
+  if (!order) return;
+  state.pendingDeleteOrderId = order.id;
+
+  const infoEl = document.getElementById('delete-confirm-order-info');
+  if (infoEl) {
+    const statusText = order.status === 'preparing' ? 'قيد التحضير 🟡' : (order.status === 'new' ? 'جديد 🔴' : 'مكتمل 🟢');
+    infoEl.innerHTML = `
+      هل أنت متأكد من حذف الطلب <strong>#${escapeHtml(order.id)}</strong> الخاص بطاولة <strong>${escapeHtml(order.table)}</strong>؟<br>
+      <span style="font-size:0.82rem; color:var(--text-muted);">الحالة الحالية: ${statusText} • القيمة: ${Number(order.total)} ₺</span>
+    `;
+  }
+  document.getElementById('delete-order-confirm-backdrop').classList.add('open');
+}
+
+function closeDeleteOrderConfirmModal() {
+  state.pendingDeleteOrderId = null;
+  document.getElementById('delete-order-confirm-backdrop').classList.remove('open');
+}
+
+async function confirmAndExecuteDeleteOrder() {
+  const orderId = state.pendingDeleteOrderId;
+  closeDeleteOrderConfirmModal();
+  if (!orderId) return;
+  await cancelOrder(orderId);
+}
+
 async function cancelOrder(orderId) {
   state.orders = state.orders.filter((o) => o.id !== orderId);
+  if (state.targetExistingOrderId === orderId) {
+    state.targetExistingOrderId = null;
+  }
   saveOrdersToStorage();
   updateHeaderBadges();
   renderCashierKanban();
@@ -1203,12 +1571,13 @@ async function cancelOrder(orderId) {
   try {
     await fetch(`${FIREBASE_DB_URL}/orders/${orderId}.json`, { method: 'DELETE' });
   } catch (e) {}
-  showToast(`تم حذف الطلب ${orderId}`, 'danger');
+  showToast(`🗑️ تم حذف الطلب الخطأ #${orderId} نهائياً`, 'danger');
 }
 
 /**
  * ============================================================================
- * CASHIER KANBAN & ORDER EDITING / ADDING ITEMS (e.g. Cola at Checkout)
+ * CASHIER KANBAN & ORDER EDITING
+ * يظهر الحجم والملاحظات الخاصة بوضوح تام للكاشير والمطبخ
  * ============================================================================
  */
 function renderCashierKanban() {
@@ -1248,37 +1617,52 @@ function renderKanbanColumnList(container, list, emptyText) {
     const shouldPulse = (order.isNewlyInjected && order.status === 'new') || order.hasUnreadAdditions;
     card.className = `order-card ${shouldPulse ? 'pulse-new' : ''}`;
 
-    const itemsHtml = order.items.map((it) => `
-      <div class="order-item-line">
-        <div>
-          <span class="order-item-qty">${Number(it.qty)}x</span>
-          ${escapeHtml(it.nameAr)}
-          ${it.addedQty ? `<span class="added-qty-tag">🆕 +${Number(it.addedQty)} إضافي</span>` : ''}
+    const itemsHtml = order.items.map((it) => {
+      const sizeBadge = it.size === 'double'
+        ? `<span class="item-size-badge size-double">🔥 دبل</span>`
+        : (it.size === 'normal' ? `<span class="item-size-badge size-normal">عادي</span>` : '');
+      const noteHtml = it.note
+        ? `<div class="order-item-note-box">📝 ملاحظة المطبخ/النادل: ${escapeHtml(it.note)}</div>`
+        : '';
+
+      return `
+        <div class="order-item-line">
+          <div class="order-item-line-top">
+            <div>
+              <span class="order-item-qty">${Number(it.qty)}x</span>
+              ${escapeHtml(it.nameAr)}
+              ${sizeBadge}
+              ${it.addedQty ? `<span class="added-qty-tag">🆕 +${Number(it.addedQty)} إضافي</span>` : ''}
+            </div>
+            <span class="order-item-line-price">${Number(it.price) * Number(it.qty)} ₺</span>
+          </div>
+          ${noteHtml}
         </div>
-        <span class="order-item-line-price">${Number(it.price) * Number(it.qty)} ₺</span>
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
     let btns = '';
     if (order.status === 'new') {
       btns = `
         <button type="button" class="btn-card-action btn-prepare" onclick="updateOrderStatus('${order.id}', 'preparing')">▶ تحضير</button>
-        <button type="button" class="btn-card-action btn-edit-order" onclick="openCashierEditOrderModal('${order.id}')">➕ تعديل / إضافة</button>
+        <button type="button" class="btn-card-action btn-edit-order" onclick="openCashierEditOrderModal('${order.id}')">➕ تعديل</button>
         <button type="button" class="btn-card-action btn-print" onclick="printReceiptById('${order.id}')">🖨️ الفيش</button>
-        <button type="button" class="btn-card-action btn-cancel-order" onclick="cancelOrder('${order.id}')">✕</button>
+        <button type="button" class="btn-card-action btn-cancel-order" onclick="openDeleteOrderConfirmModal('${order.id}')" title="حذف الطلب الخطأ">🗑️ حذف</button>
       `;
     } else if (order.status === 'preparing') {
       btns = `
         <button type="button" class="btn-card-action btn-complete" onclick="updateOrderStatus('${order.id}', 'completed')">✔ تسليم</button>
-        <button type="button" class="btn-card-action btn-edit-order" onclick="openCashierEditOrderModal('${order.id}')">➕ تعديل / كولا</button>
+        <button type="button" class="btn-card-action btn-edit-order" onclick="openCashierEditOrderModal('${order.id}')">➕ تعديل</button>
         <button type="button" class="btn-card-action btn-print" onclick="printReceiptById('${order.id}')">🖨️ الفيش</button>
-        <button type="button" class="btn-card-action btn-return-prep" onclick="updateOrderStatus('${order.id}', 'new')" title="إرجاع لقائمة الطلبات الجديدة">↩ للجديد</button>
+        <button type="button" class="btn-card-action btn-return-prep" onclick="updateOrderStatus('${order.id}', 'new')" title="إرجاع للجديد">↩</button>
+        <button type="button" class="btn-card-action btn-cancel-order" onclick="openDeleteOrderConfirmModal('${order.id}')" title="حذف الطلب الخطأ حتى لو قيد التحضير">🗑️ حذف</button>
       `;
     } else {
       btns = `
-        <button type="button" class="btn-card-action btn-return-prep" onclick="updateOrderStatus('${order.id}', 'preparing')">↩ إعادة لقيد التحضير</button>
-        <button type="button" class="btn-card-action btn-edit-order" onclick="openCashierEditOrderModal('${order.id}')">➕ تعديل / إضافة</button>
-        <button type="button" class="btn-card-action btn-print" onclick="printReceiptById('${order.id}')">🖨️ طباعة الفيش</button>
+        <button type="button" class="btn-card-action btn-return-prep" onclick="updateOrderStatus('${order.id}', 'preparing')">↩ للتحضير</button>
+        <button type="button" class="btn-card-action btn-edit-order" onclick="openCashierEditOrderModal('${order.id}')">➕ تعديل</button>
+        <button type="button" class="btn-card-action btn-print" onclick="printReceiptById('${order.id}')">🖨️ الفيش</button>
+        <button type="button" class="btn-card-action btn-cancel-order" onclick="openDeleteOrderConfirmModal('${order.id}')" title="حذف الطلب">🗑️</button>
       `;
     }
 
@@ -1302,9 +1686,6 @@ function renderKanbanColumnList(container, list, emptyText) {
   });
 }
 
-// ==========================================
-// نافذة الكاشير لتعديل أي طلب وإضافة أصناف (كولا، مشروبات، إلخ)
-// ==========================================
 function openCashierEditOrderModal(orderId) {
   const order = state.orders.find((o) => o.id === orderId);
   if (!order) return;
@@ -1336,7 +1717,7 @@ function addMenuItemToCashierDraft(itemIndex) {
   const menuItem = menuData[itemIndex];
   if (!menuItem) return;
 
-  const existing = state.cashierEditDraftItems.find((it) => it.nameAr === menuItem.nameAr);
+  const existing = state.cashierEditDraftItems.find((it) => it.nameAr === menuItem.nameAr && !it.note);
   if (existing) {
     existing.qty = Number(existing.qty) + 1;
     existing.addedQty = (Number(existing.addedQty) || 0) + 1;
@@ -1344,6 +1725,8 @@ function addMenuItemToCashierDraft(itemIndex) {
     state.cashierEditDraftItems.push({
       nameAr: menuItem.nameAr,
       nameTr: menuItem.nameTr,
+      size: 'standard',
+      note: '',
       price: Number(menuItem.price),
       qty: 1,
       addedQty: 1
@@ -1396,8 +1779,7 @@ function renderCashierPickerGrid() {
 }
 
 function renderCashierEditModalContent() {
-  // 1. أزرار الإضافة السريعة (كولا، عيران، شاي، بطاطا، فلافل، مايونيز، سرفيس)
-  const quickNames = ['كولا', 'عيران', 'شاي', 'فلافل لف', 'بطاطا وجبة', 'مايونيز', 'سرفيس'];
+  const quickNames = ['ماء', 'كولا', 'عيران', 'شاي', 'فلافل لف', 'بطاطا وجبة', 'مايونيز', 'كاتشب', 'سرفيس'];
   const quickContainer = document.getElementById('cashier-quick-addons');
   if (quickContainer) {
     quickContainer.innerHTML = quickNames.map((qName) => {
@@ -1413,10 +1795,8 @@ function renderCashierEditModalContent() {
     }).join('');
   }
 
-  // 2. شبكة كل الأصناف
   renderCashierPickerGrid();
 
-  // 3. قائمة أصناف الطلب الحالية
   const listEl = document.getElementById('cashier-edit-items-list');
   const totalEl = document.getElementById('cashier-edit-total-val');
   if (!listEl || !totalEl) return;
@@ -1433,21 +1813,24 @@ function renderCashierEditModalContent() {
     sum += line;
     return `
       <div class="cart-item-row" style="padding:0.55rem 0.8rem;">
-        <div class="cart-item-info">
-          <div class="cart-item-title-ar">
-            ${escapeHtml(it.nameAr)}
-            ${it.addedQty ? `<span class="added-qty-tag">+${Number(it.addedQty)} جديد</span>` : ''}
+        <div class="cart-item-main-line">
+          <div class="cart-item-info">
+            <div class="cart-item-title-ar">
+              ${escapeHtml(it.nameAr)}
+              ${it.addedQty ? `<span class="added-qty-tag">+${Number(it.addedQty)} جديد</span>` : ''}
+            </div>
+            <div class="cart-item-title-tr">${escapeHtml(it.nameTr || '')} (${Number(it.price)} ₺)</div>
+            ${it.note ? `<div class="order-item-note-box">📝 ملاحظة: ${escapeHtml(it.note)}</div>` : ''}
           </div>
-          <div class="cart-item-title-tr">${escapeHtml(it.nameTr || '')} (${Number(it.price)} ₺)</div>
-        </div>
-        <div class="cart-item-controls">
-          <div class="qty-stepper">
-            <button type="button" class="btn-qty" onclick="updateCashierDraftItemQty(${idx}, -1)">−</button>
-            <span class="qty-value">${Number(it.qty)}</span>
-            <button type="button" class="btn-qty" onclick="updateCashierDraftItemQty(${idx}, 1)">+</button>
+          <div class="cart-item-controls">
+            <div class="qty-stepper">
+              <button type="button" class="btn-qty" onclick="updateCashierDraftItemQty(${idx}, -1)">−</button>
+              <span class="qty-value">${Number(it.qty)}</span>
+              <button type="button" class="btn-qty" onclick="updateCashierDraftItemQty(${idx}, 1)">+</button>
+            </div>
+            <div class="cart-item-price">${line} ₺</div>
+            <button type="button" class="btn-trash" onclick="removeCashierDraftItem(${idx})">🗑️</button>
           </div>
-          <div class="cart-item-price">${line} ₺</div>
-          <button type="button" class="btn-trash" onclick="removeCashierDraftItem(${idx})">🗑️</button>
         </div>
       </div>
     `;
@@ -1506,7 +1889,7 @@ async function saveCashierOrderEdits(nextStatusOption = null, autoPrint = false)
 /**
  * ============================================================================
  * MODULE 4: ZJIANG POS-58 (58mm) THERMAL RECEIPT ENGINE
- * تصميم مبسط وواضح جداً بعرض فعلي 46mm يمنع انقسام الفيش إلى النصف نهائياً
+ * مهم جداً (Requirement 8): عدم إظهار ملاحظة النادل في الفيش المطبوع نهائياً
  * ============================================================================
  */
 function formatPriceClean(num) {
@@ -1518,7 +1901,6 @@ function printReceiptById(orderId) {
   const order = state.orders.find((o) => o.id === orderId);
   if (!order) return;
 
-  // عند فتح الفيش، نعتبر الإضافات مقروءة
   if (order.hasUnreadAdditions) {
     order.hasUnreadAdditions = false;
     order.isNewlyInjected = false;
@@ -1528,6 +1910,7 @@ function printReceiptById(orderId) {
   }
 
   let total = 0;
+  // ملاحظة النادل (item.note) مستبعدة تماماً من الفيش المطبوع بناءً على الشرط رقم 8
   const rows = order.items.map((item) => {
     const qty = Number(item.qty);
     const price = Number(item.price);
@@ -1547,6 +1930,9 @@ function printReceiptById(orderId) {
 
   const html = `
     <div class="receipt-wrapper">
+      <div class="receipt-logo-wrap">
+        <img src="Falafel aldmşke.png" alt="Logo" class="receipt-logo-img">
+      </div>
       <div class="receipt-header">
         <div class="receipt-brand-ar">مطعم فلافل الدمشقي</div>
         <div class="receipt-brand-tr">FALAFEL ALDMŞKE RESTORAN</div>
@@ -1586,6 +1972,11 @@ function printReceiptById(orderId) {
       </div>
     </div>
   `;
+
+  const titleEl = document.getElementById('receipt-modal-title');
+  if (titleEl) {
+    titleEl.textContent = '🖨️ معاينة الفيش (مضبوط لطابعة ZJIANG POS-58)';
+  }
 
   document.getElementById('print-section').innerHTML = html;
   document.getElementById('modal-thermal-preview').innerHTML = html;
@@ -1630,6 +2021,9 @@ function openZReportModal() {
 
   const html = `
     <div class="receipt-wrapper">
+      <div class="receipt-logo-wrap">
+        <img src="Falafel aldmşke.png" alt="Logo" class="receipt-logo-img">
+      </div>
       <div class="receipt-header">
         <div class="receipt-brand-ar">تقرير الإغلاق (Z-REPORT)</div>
         <div class="receipt-brand-tr">FALAFEL ALDMŞKE • Z-REPORT</div>
@@ -1665,6 +2059,11 @@ function openZReportModal() {
     </div>
   `;
 
+  const titleEl = document.getElementById('receipt-modal-title');
+  if (titleEl) {
+    titleEl.textContent = '📊 تقرير الإغلاق العام (Z-Report)';
+  }
+
   document.getElementById('print-section').innerHTML = html;
   document.getElementById('modal-thermal-preview').innerHTML = html;
   document.getElementById('receipt-modal-backdrop').classList.add('open');
@@ -1674,19 +2073,94 @@ function closeReceiptModal() {
   document.getElementById('receipt-modal-backdrop').classList.remove('open');
 }
 
+/**
+ * ============================================================================
+ * MENU & PRICE MANAGER MODAL (Requirement 1: Easy Add/Edit/Delete Menu Items)
+ * ============================================================================
+ */
 function openPriceEditorModal() {
+  renderPriceEditorList();
+  document.getElementById('price-editor-backdrop').classList.add('open');
+}
+
+function renderPriceEditorList() {
   const listEl = document.getElementById('price-editor-list');
+  if (!listEl) return;
   listEl.innerHTML = '';
+
   menuData.forEach((item, idx) => {
+    const isSand = isSandwichItem(item);
+    const dblVal = isSand ? getDoublePrice(item) : Number(item.price);
     const row = document.createElement('div');
     row.className = 'price-editor-row';
     row.innerHTML = `
-      <div><strong>${escapeHtml(item.nameAr)}</strong></div>
-      <input type="number" class="price-editor-input" id="price-input-${idx}" value="${Number(item.price)}" />
+      <div>
+        <strong style="font-size:0.88rem;">${escapeHtml(item.nameAr)}</strong>
+        <div style="font-size:0.74rem; color:var(--text-muted);">${escapeHtml(item.nameTr || '')}</div>
+      </div>
+      <div style="font-size:0.78rem; color:var(--accent-gold); font-weight:700;">${escapeHtml(item.category)}</div>
+      <div>
+        <div style="font-size:0.68rem; color:var(--text-muted); text-align:center;">سعر العادي</div>
+        <input type="number" class="price-editor-input" id="price-input-${idx}" value="${Number(item.price)}" />
+      </div>
+      <div>
+        <div style="font-size:0.68rem; color:var(--text-muted); text-align:center;">${isSand ? 'سعر الدبل' : 'بدون دبل'}</div>
+        <input type="number" class="price-editor-input" id="double-price-input-${idx}" value="${dblVal}" ${isSand ? '' : 'disabled style="opacity:0.4;"'} />
+      </div>
+      <button type="button" class="btn-trash" onclick="deleteMenuItemFromManager(${idx})" title="حذف الصنف">🗑️</button>
     `;
     listEl.appendChild(row);
   });
-  document.getElementById('price-editor-backdrop').classList.add('open');
+}
+
+function addNewMenuItemFromUI() {
+  const catEl = document.getElementById('new-item-category');
+  const arEl = document.getElementById('new-item-name-ar');
+  const trEl = document.getElementById('new-item-name-tr');
+  const prEl = document.getElementById('new-item-price');
+  const dblEl = document.getElementById('new-item-double-price');
+  const hasSizeEl = document.getElementById('new-item-has-size');
+
+  const category = (catEl ? catEl.value : '').trim();
+  const nameAr = (arEl ? arEl.value : '').trim();
+  const nameTr = (trEl ? trEl.value : '').trim();
+  const price = Number(prEl ? prEl.value : 0);
+  const hasSizeOption = Boolean(hasSizeEl && hasSizeEl.checked) || category.includes('سندويش') || category.includes('عربي');
+  const doublePrice = Number(dblEl && dblEl.value ? dblEl.value : Math.round(price * 1.3));
+
+  if (!category || !nameAr || price <= 0) {
+    showToast('يرجى إدخال اسم الصنف والتصنيف والسعر بشكل صحيح', 'danger');
+    return;
+  }
+
+  addOrUpdateMenuItem({ category, nameAr, nameTr, price, hasSizeOption, doublePrice });
+
+  if (arEl) arEl.value = '';
+  if (trEl) trEl.value = '';
+  if (prEl) prEl.value = '';
+  if (dblEl) dblEl.value = '';
+
+  renderPriceEditorList();
+  showToast(`✓ تمت إضافة الصنف "${nameAr}" إلى قسم "${category}"`, 'success');
+}
+
+function deleteMenuItemFromManager(idx) {
+  if (!menuData[idx]) return;
+  const removed = menuData.splice(idx, 1)[0];
+  saveMenuToStorage();
+  renderCategoryPills();
+  renderMenuView();
+  renderPriceEditorList();
+  showToast(`🗑️ تم حذف الصنف "${removed.nameAr}" من المنيو`, 'danger');
+}
+
+function resetMenuToDefault() {
+  menuData = JSON.parse(JSON.stringify(defaultMenuData));
+  saveMenuToStorage();
+  renderCategoryPills();
+  renderMenuView();
+  renderPriceEditorList();
+  showToast('✓ تمت استعادة قائمة المنيو الافتراضية المحدثة', 'success');
 }
 
 function closePriceEditorModal() {
@@ -1696,12 +2170,16 @@ function closePriceEditorModal() {
 function saveUpdatedMenuPrices() {
   menuData.forEach((item, idx) => {
     const input = document.getElementById(`price-input-${idx}`);
+    const dblInput = document.getElementById(`double-price-input-${idx}`);
     if (input && Number(input.value) >= 0) item.price = Number(input.value);
+    if (dblInput && !dblInput.disabled && Number(dblInput.value) >= 0) {
+      item.doublePrice = Number(dblInput.value);
+    }
   });
   saveMenuToStorage();
   renderMenuView();
   closePriceEditorModal();
-  showToast('تم حفظ الأسعار ✓', 'success');
+  showToast('تم حفظ تعديلات المنيو والأسعار بنجاح ✓', 'success');
 }
 
 function escapeHtml(str) {
@@ -1755,7 +2233,7 @@ function applyPrintConfigToDOM(showFeedback) {
   const { preset, align, offsetMm } = state.printConfig;
 
   let paperW = '58mm';
-  let contentW = '46mm'; // ZJIANG POS-58 optimal printable width
+  let contentW = '46mm';
 
   if (preset === 'safe42') {
     paperW = '58mm';
@@ -1768,7 +2246,7 @@ function applyPrintConfigToDOM(showFeedback) {
     contentW = '46mm';
   }
 
-  let marginRule = '0 auto 0 0'; // Right anchor (default for RTL 58mm drivers)
+  let marginRule = '0 auto 0 0';
   if (align === 'left') {
     marginRule = '0 0 0 auto';
   } else if (align === 'center') {
@@ -1780,18 +2258,13 @@ function applyPrintConfigToDOM(showFeedback) {
   root.style.setProperty('--print-align-margin', marginRule);
   root.style.setProperty('--print-offset-x', `${offsetMm}mm`);
 
-  // تحديث أزرار المقاس
   const btn58 = document.getElementById('btn-size-58');
   const btn42 = document.getElementById('btn-preset-safe42');
   const btn80 = document.getElementById('btn-size-80');
   if (btn58) btn58.className = preset === 'zjiang58' ? 'btn-gold' : 'btn-secondary';
   if (btn42) btn42.className = preset === 'safe42' ? 'btn-gold' : 'btn-secondary';
   if (btn80) btn80.className = preset === '80' ? 'btn-gold' : 'btn-secondary';
-  [].forEach((p) => {
-    if (btn) btn.className = preset === p ? 'btn-gold' : 'btn-secondary';
-  });
 
-  // تحديث أزرار المحاذاة
   ['right', 'center', 'left'].forEach((a) => {
     const btn = document.getElementById(`btn-align-${a}`);
     if (btn) btn.className = align === a ? 'btn-gold' : 'btn-secondary';
@@ -1824,7 +2297,6 @@ function applyPrintConfigToDOM(showFeedback) {
   }
 }
 
-// متوافق مع الاستدعاء القديم إن وجد
 function setThermalPaperSize(sizeMm) {
   setThermalPaperPreset(sizeMm === '80' ? '80' : 'zjiang58');
 }
@@ -1838,6 +2310,15 @@ function initPosApp() {
   loadOrdersFromStorage();
   loadPrintConfig();
   initAudioElements();
+
+  // فحص التصفير اليومي التلقائي (كل 24 ساعة عند منتصف الليل) والتقرير التلقائي الساعة 9:00 مساءً
+  checkAndRunDailyReset();
+  checkAutoDailyReport9PM();
+  setInterval(() => {
+    checkAndRunDailyReset();
+    checkAutoDailyReport9PM();
+  }, 20000);
+
   renderCategoryPills();
   renderWaiterActiveOrdersStrip();
   renderMenuView();
@@ -1845,7 +2326,6 @@ function initPosApp() {
   renderCashierKanban();
   updateHeaderBadges();
 
-  // جلب الطلبات من السحابة فوراً وتشغيل الـ Web Worker الخلفي الذي لا يتوقف في يوتيوب أو عند تصغير كروم
   syncNowFromCloud(false);
   startBackgroundSyncWorker();
 }
